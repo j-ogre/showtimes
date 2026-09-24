@@ -17,6 +17,17 @@ PAGE = Path(__file__).resolve().parent.parent / "templates" / "page.html"
 log = logging.getLogger(__name__)
 
 
+def page_html(config: Config, static: bool) -> str:
+    """Return the page with its settings filled in.
+
+    A `static` page reads data/<date>.json next to itself instead of the API.
+    Raises OSError if the template cannot be read.
+    """
+    return (PAGE.read_text(encoding="utf-8")
+            .replace("__TIMEZONE__", json.dumps(config.timezone.key))
+            .replace("__STATIC__", json.dumps(static)))
+
+
 def make_server(host: str, port: int, config: Config, resolver: Resolver,
                 ratings_path: Path, store: Cache) -> ThreadingHTTPServer:
     """Return a server bound to (host, port). Raises OSError if the port is taken."""
@@ -26,9 +37,7 @@ def make_server(host: str, port: int, config: Config, resolver: Resolver,
             url = urlparse(self.path)
             if url.path == "/":
                 # Read per request so template edits show up on reload.
-                page = PAGE.read_text(encoding="utf-8").replace(
-                    "__TIMEZONE__", json.dumps(config.timezone.key))
-                self._send(200, "text/html; charset=utf-8", page.encode())
+                self._send(200, "text/html; charset=utf-8", page_html(config, False).encode())
             elif url.path == "/api/showtimes":
                 query = parse_qs(url.query)
                 self._showtimes(query.get("date", [""])[0],

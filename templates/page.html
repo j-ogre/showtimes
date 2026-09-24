@@ -191,6 +191,8 @@
 </div>
 <script>
 const TZ = __TIMEZONE__;
+// A static page reads prebuilt data/<date>.json files; it has no server to refresh caches.
+const STATIC = __STATIC__;
 const FAR_DAYS = 7;
 let data = null;
 let sortKey = "title";
@@ -242,7 +244,10 @@ async function fetchDay(refresh = false) {
   status.textContent = refresh ? "Updating caches…" : "Loading…";
   if (!data) out.replaceChildren(el("p", { class: "empty" }, "Loading showtimes…"));
   try {
-    const resp = await fetch(`/api/showtimes?date=${encodeURIComponent(day)}${refresh ? "&refresh=1" : ""}`);
+    const resp = STATIC
+      ? await fetch(`data/${day}.json`, { cache: "no-cache" })
+      : await fetch(`/api/showtimes?date=${encodeURIComponent(day)}${refresh ? "&refresh=1" : ""}`);
+    if (STATIC && resp.status === 404) throw new Error("no showtimes published for this date yet");
     const body = await resp.json();
     if (!resp.ok) throw new Error(body.error || `HTTP ${resp.status}`);
     data = body;
@@ -495,6 +500,7 @@ function selectView(name) {
 }
 
 document.getElementById("day").value = wallClock().day;
+document.querySelector("footer").hidden = STATIC;
 document.getElementById("controls").addEventListener("submit", e => {
   e.preventDefault();
   fetchDay();

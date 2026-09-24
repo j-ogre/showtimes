@@ -1,0 +1,46 @@
+name: Publish showtimes
+
+on:
+  schedule:
+    # Every 6 hours, matching the showtimes cache. Times are UTC.
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      # Keeps the IMDb file, RT pages and title matches between runs. A cache
+      # entry is immutable, so each run saves a new one and restores the latest.
+      - uses: actions/cache@v4
+        with:
+          path: cache
+          key: showtimes-${{ github.run_id }}
+          restore-keys: showtimes-
+      - run: python -m src.export site
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
