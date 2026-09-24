@@ -2,8 +2,8 @@ name: Publish showtimes
 
 on:
   schedule:
-    # Every 6 hours, matching the showtimes cache. Times are UTC.
-    - cron: "17 */6 * * *"
+    # 15:00 UTC is 8 AM Pacific in daylight time and 7 AM in standard time.
+    - cron: "0 15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
           path: cache
           key: showtimes-${{ github.run_id }}
           restore-keys: showtimes-
-      - run: python -m src.export site
+      - run: python -m src.export site --days 3
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site

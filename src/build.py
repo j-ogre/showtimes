@@ -17,7 +17,9 @@ from .resolve import Resolver
 WORKERS = 8
 FANDANGO_GAP_S = 1.0
 SHOWTIMES_MAX_AGE_S = 6 * 3600
-RT_MAX_AGE_S = 24 * 3600
+# Every other daily run. Scheduled runs start up to an hour late, so the ages
+# sit between run gaps: 24h reuses, 48h refetches.
+RT_MAX_AGE_S = 44 * 3600
 NO_RT = {"critics": None, "consensus": None, "synopsis": None}
 
 log = logging.getLogger(__name__)

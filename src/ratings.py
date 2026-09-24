@@ -12,7 +12,8 @@ from . import net
 
 IMDB_DATASET = "https://datasets.imdbws.com/title.ratings.tsv.gz"
 # IMDb regenerates the file once a day.
-DATASET_MAX_AGE_S = 24 * 3600
+# Below a day so a daily run that starts earlier than the last one still refetches.
+DATASET_MAX_AGE_S = 20 * 3600
 RT_SCORECARD = re.compile(
     r'<script[^>]*id="media-scorecard-json"[^>]*>(.*?)</script>', re.S)
 RT_CONSENSUS = re.compile(r'id="critics-consensus"[^>]*>.*?<p>(.*?)</p>', re.S)
