@@ -29,6 +29,20 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
              clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  .filters { font-size: 14px; margin-top: 12px; }
+  .filters fieldset { border: 0; padding: 0; margin: 8px 0 12px; min-width: 0; }
+  .filters legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
+  .filters label { display: flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; }
+  .filters .range { justify-content: space-between; cursor: default; }
+  .filters output { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .filters input { accent-color: var(--accent); margin: 0; }
+  .filters input[type=checkbox] { width: 18px; height: 18px; flex: none; }
+  .filters input[type=range] { width: 100%; min-height: 28px; }
+  @media (min-width: 900px) {
+    .wrap { max-width: 1000px; }
+    .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
+    .filters summary { display: none; }
+  }
 
   header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 0; }
   @media (min-width: 600px) {
@@ -50,7 +64,7 @@
   .sort button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
   #status { color: var(--muted); font-size: 13px; margin-top: 8px; min-height: 1.45em; }
 
-  main.wrap { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
+  main { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
   main[aria-busy=true] { opacity: .5; }
   @media (prefers-reduced-motion: reduce) { main { transition: none; } }
   .banner { background: var(--warn-bg); color: var(--warn-text); border-radius: 8px;
@@ -145,7 +159,20 @@
     </div>
   </div>
 </header>
-<main id="out" class="wrap" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
+<div class="wrap layout">
+  <details class="filters" id="filters">
+    <summary>Filters</summary>
+    <fieldset id="theaters"><legend>Theaters</legend></fieldset>
+    <fieldset id="score-filter" hidden>
+      <legend>Minimum scores</legend>
+      <label class="range" for="min-imdb">IMDb <output id="min-imdb-out" for="min-imdb">Any</output></label>
+      <input type="range" id="min-imdb" min="0" max="10" step="0.5" value="0">
+      <label class="range" for="min-rt">RT critics <output id="min-rt-out" for="min-rt">Any</output></label>
+      <input type="range" id="min-rt" min="0" max="100" step="5" value="0">
+    </fieldset>
+  </details>
+  <main id="out" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
+</div>
 <footer class="wrap"><a href="#" id="refresh">Manually update caches</a></footer>
 <script>
 const TZ = __TIMEZONE__;
@@ -153,6 +180,7 @@ const FAR_DAYS = 7;
 let data = null;
 let sortKey = "title";
 let view = "movies";
+const hiddenTheaters = new Set();
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -203,6 +231,7 @@ async function fetchDay(refresh = false) {
     const body = await resp.json();
     if (!resp.ok) throw new Error(body.error || `HTTP ${resp.status}`);
     data = body;
+    theaterOptions();
     render();
   } catch (err) {
     data = null;
@@ -322,6 +351,39 @@ function theaterBlock(t, isToday, now) {
   return block;
 }
 
+// One checkbox per theater in `data`; unchecked names persist across fetches.
+function theaterOptions() {
+  const names = [...new Set(data.movies.flatMap(m => m.theaters.map(t => t.name)))]
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+  const box = document.getElementById("theaters");
+  box.replaceChildren(box.querySelector("legend"), ...names.map(name => {
+    const input = el("input", { type: "checkbox" });
+    input.checked = !hiddenTheaters.has(name);
+    input.addEventListener("change", () => {
+      if (input.checked) hiddenTheaters.delete(name);
+      else hiddenTheaters.add(name);
+      render();
+    });
+    return el("label", {}, input, name);
+  }));
+}
+
+// Movies limited to checked theaters. On Playing soon, movies below a minimum score are dropped;
+// a missing score never drops a movie.
+function visibleMovies() {
+  const soon = view === "soon";
+  const minImdb = soon ? +document.getElementById("min-imdb").value : 0;
+  const minRt = soon ? +document.getElementById("min-rt").value : 0;
+  const out = [];
+  for (const m of data.movies) {
+    if (m.imdb_rating != null && parseFloat(m.imdb_rating) < minImdb) continue;
+    if (m.rt_critics != null && m.rt_critics < minRt) continue;
+    const theaters = m.theaters.filter(t => !hiddenTheaters.has(t.name));
+    if (theaters.length) out.push({ ...m, theaters });
+  }
+  return out;
+}
+
 function render() {
   if (!data) return;
   const { day: today, now } = wallClock();
@@ -334,14 +396,19 @@ function render() {
   }
   if (data.no_showtimes) out.push(el("p", { class: "empty" }, "No showtimes published for this date."));
   const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
-  let count = plural(data.movies.length, "movie");
+  const movies = visibleMovies();
+  const filteredOut = data.movies.length > 0 && movies.length === 0;
+  if (filteredOut) out.push(el("p", { class: "empty" }, "No movies match the filters."));
+  let count = plural(movies.length, "movie");
   if (view === "soon") {
-    const slots = upcoming(isToday, now);
+    const slots = upcoming(movies, isToday, now);
     count += ` · ${plural(slots.length, "showtime")}${isToday ? " left" : ""}`;
-    if (!slots.length && !data.no_showtimes) out.push(el("p", { class: "empty" }, "No more showtimes for this date."));
+    if (!slots.length && !data.no_showtimes && !filteredOut) {
+      out.push(el("p", { class: "empty" }, "No more showtimes for this date."));
+    }
     out.push(...soonList(slots));
   } else {
-    for (const m of [...data.movies].sort(compare)) out.push(movieCard(m, isToday, now));
+    for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now));
   }
   document.getElementById("out").replaceChildren(...out);
   const fetched = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
@@ -358,10 +425,10 @@ function movieCard(m, isToday, now) {
   return card;
 }
 
-// Every showtime that hasn't started, across all movies and theaters, earliest first.
-function upcoming(isToday, now) {
+// Every showtime in `movies` that hasn't started, earliest first.
+function upcoming(movies, isToday, now) {
   const slots = [];
-  for (const m of data.movies) {
+  for (const m of movies) {
     for (const t of m.theaters) {
       for (const s of t.showtimes) {
         if (s.status === "pastshowtime" || (isToday && s.at < now)) continue;
@@ -404,6 +471,7 @@ function selectView(name) {
     if (on) document.getElementById("out").setAttribute("aria-labelledby", tab.id);
   }
   document.querySelector(".sort").hidden = name !== "movies";
+  document.getElementById("score-filter").hidden = name !== "soon";
   render();
 }
 
@@ -423,6 +491,20 @@ for (const b of document.querySelectorAll(".sort button")) {
     render();
   });
 }
+for (const [id, format] of [["min-imdb", v => v.toFixed(1)], ["min-rt", v => `${v}%`]]) {
+  const input = document.getElementById(id);
+  input.addEventListener("input", () => {
+    const text = +input.value ? `${format(+input.value)}+` : "Any";
+    document.getElementById(`${id}-out`).textContent = text;
+    input.setAttribute("aria-valuetext", text);
+    render();
+  });
+}
+// The filter panel collapses only on narrow screens.
+const wide = matchMedia("(min-width: 900px)");
+const openFilters = () => { if (wide.matches) document.getElementById("filters").open = true; };
+wide.addEventListener("change", openFilters);
+openFilters();
 const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
 for (const tab of tabs) {
   tab.addEventListener("click", () => selectView(tab.dataset.view));
