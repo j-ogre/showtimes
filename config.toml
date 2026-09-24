@@ -1,0 +1,17 @@
+timezone = "America/Los_Angeles"
+
+# Fandango theater pages. The theater ID is the last part of each slug.
+theaters = [
+  "https://www.fandango.com/amc-burbank-16-aaqzz/theater-page",
+  "https://www.fandango.com/amc-burbank-town-center-6-aabsu/theater-page",
+  "https://www.fandango.com/amc-burbank-town-center-8-aaapc/theater-page",
+  "https://www.fandango.com/universal-cinema-an-amc-theatre-aaawx/theater-page",
+]
+
+# AMC theater pages, by Fandango theater ID. Showtimes at these theaters link to
+# AMC's page for the date. Theaters not listed link to Fandango.
+[amc]
+aaqzz = "https://www.amctheatres.com/movie-theatres/los-angeles/amc-burbank-16"
+aabsu = "https://www.amctheatres.com/movie-theatres/los-angeles/amc-burbank-town-center-6"
+aaapc = "https://www.amctheatres.com/movie-theatres/los-angeles/amc-burbank-town-center-8"
+aaawx = "https://www.amctheatres.com/movie-theatres/los-angeles/universal-cinema-amc-at-citywalk-hollywood"

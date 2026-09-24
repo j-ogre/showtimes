@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Showtimes</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f6f4; --card: #fff; --text: #1b1b1b; --muted: #636363;
+    --line: #e2e2de; --chip: #eef2f7; --chip-text: #17365d;
+    --accent: #2458a6; --on-accent: #fff; --accent-soft: #e3ecf9;
+    --warn-bg: #fff4d6; --warn-text: #6a4b00; --focus: #2458a6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121212; --card: #1d1d1f; --text: #ececec; --muted: #a0a0a0;
+      --line: #2e2e31; --chip: #243044; --chip-text: #d6e5ff;
+      --accent: #7fb0ff; --on-accent: #0b1a33; --accent-soft: #22324b;
+      --warn-bg: #3a3014; --warn-text: #f3d98b; --focus: #9cc2ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
+             clip: rect(0 0 0 0); white-space: nowrap; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+  header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 10px; }
+  @media (min-width: 600px) {
+    header { position: sticky; top: 0; z-index: 1; }
+  }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .pick { display: flex; gap: 8px; }
+  input[type=date], button { font: inherit; border-radius: 8px; min-height: 40px;
+         border: 1px solid var(--line); background: var(--card); color: var(--text); }
+  input[type=date] { padding: 6px 10px; }
+  #fetch { padding: 6px 16px; background: var(--accent); color: var(--on-accent);
+           border-color: var(--accent); font-weight: 600; cursor: pointer; }
+  #fetch:disabled { opacity: .6; cursor: default; }
+  .sort { display: inline-flex; margin-left: auto; border: 1px solid var(--line);
+          border-radius: 8px; overflow: hidden; background: var(--card); }
+  .sort button { border: 0; border-radius: 0; min-height: 38px; padding: 0 12px;
+                 font-size: 14px; background: transparent; cursor: pointer; }
+  .sort button + button { border-left: 1px solid var(--line); }
+  .sort button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  #status { color: var(--muted); font-size: 13px; margin-top: 8px; min-height: 1.45em; }
+
+  main.wrap { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
+  main[aria-busy=true] { opacity: .5; }
+  @media (prefers-reduced-motion: reduce) { main { transition: none; } }
+  .banner { background: var(--warn-bg); color: var(--warn-text); border-radius: 8px;
+            padding: 8px 12px; margin-bottom: 8px; font-size: 14px; }
+  .empty { color: var(--muted); text-align: center; padding: 32px 0; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+          padding: 14px; margin-bottom: 12px; }
+  .top { display: flex; gap: 12px; }
+  .top .info { min-width: 0; flex: 1; }
+  .poster { width: 64px; height: 96px; object-fit: cover; border-radius: 6px; flex: none;
+            background: var(--line); }
+  .card h2 { font-size: 18px; line-height: 1.25; margin: 0 0 4px; }
+  .meta { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .scores { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; margin-bottom: 4px; }
+  .scores a, .scores span.none { display: inline-flex; align-items: center; gap: 5px;
+                                 min-height: 28px; text-decoration: none; }
+  .scores a { color: var(--text); }
+  .scores a:hover .value { text-decoration: underline; }
+  .scores .value { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .scores .none { color: var(--muted); }
+  .imdb-logo { background: #f5c518; color: #000; font-weight: 800; font-size: 11px;
+               padding: 1px 4px; border-radius: 3px; letter-spacing: -.2px;
+               font-family: Impact, "Arial Black", sans-serif; }
+  .splat { width: 1.1em; height: 1.1em; flex: none; }
+  details { font-size: 14px; }
+  details summary { cursor: pointer; color: var(--accent); font-size: 13px;
+                    min-height: 28px; display: flex; align-items: center; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: "▸"; margin-right: 4px; }
+  details[open] summary::before { content: "▾"; }
+  details p { margin: 4px 0 6px; }
+  details .label { font-weight: 600; }
+
+  .theater { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 10px; }
+  .theater h3 { font-size: 14px; margin: 0 0 6px; font-weight: 600; }
+  .group { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: start;
+           margin-bottom: 6px; }
+  .format { font-size: 12px; color: var(--muted); line-height: 36px; overflow-wrap: anywhere; }
+  .times { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px;
+          border-radius: 999px; font-size: 14px; background: var(--chip); color: var(--chip-text);
+          text-decoration: none; font-variant-numeric: tabular-nums; }
+  a.chip:hover { outline: 1px solid var(--chip-text); }
+  .chip.soldout { text-decoration: line-through; opacity: .6; }
+  .chip.past { opacity: .4; }
+
+  footer.wrap { text-align: center; font-size: 12px; padding-bottom: 24px; }
+  footer a { color: var(--muted); }
+  footer a[aria-disabled=true] { pointer-events: none; opacity: .6; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1 class="sr-only">Showtimes</h1>
+    <form class="controls" id="controls">
+      <div class="pick">
+        <input type="date" id="day" aria-label="Date" required>
+        <button type="submit" id="fetch">Fetch</button>
+      </div>
+      <div class="sort" role="group" aria-label="Sort by">
+        <button type="button" data-sort="title" aria-pressed="true">Title</button>
+        <button type="button" data-sort="overall" aria-pressed="false">Overall</button>
+        <button type="button" data-sort="imdb" aria-pressed="false">IMDb</button>
+        <button type="button" data-sort="rt" aria-pressed="false">RT</button>
+      </div>
+    </form>
+    <div id="status" role="status" aria-live="polite"></div>
+  </div>
+</header>
+<main id="out" class="wrap" aria-busy="false"></main>
+<footer class="wrap"><a href="#" id="refresh">Manually update caches</a></footer>
+<script>
+const TZ = __TIMEZONE__;
+const FAR_DAYS = 7;
+let data = null;
+let sortKey = "title";
+
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v;
+    else node.setAttribute(k, v);
+  }
+  for (const c of children) node.append(c);
+  return node;
+}
+
+// Wall-clock date and time in TZ, formatted to compare with showtime "at" strings.
+function wallClock() {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+    timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+  }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  const day = `${parts.year}-${parts.month}-${parts.day}`;
+  return { day, now: `${day}T${parts.hour}:${parts.minute}` };
+}
+
+function daysBetween(a, b) {
+  return Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+}
+
+// "YYYY-MM-DD" as a calendar date; UTC keeps the day from shifting.
+function formatDay(iso, options) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString([], { timeZone: "UTC", ...options });
+}
+
+let busy = false;
+
+async function fetchDay(refresh = false) {
+  const day = document.getElementById("day").value;
+  if (!day || busy) return;
+  busy = true;
+  const button = document.getElementById("fetch");
+  const link = document.getElementById("refresh");
+  const status = document.getElementById("status");
+  const out = document.getElementById("out");
+  button.disabled = true;
+  link.setAttribute("aria-disabled", "true");
+  out.setAttribute("aria-busy", "true");
+  status.textContent = refresh ? "Updating caches…" : "Loading…";
+  if (!data) out.replaceChildren(el("p", { class: "empty" }, "Loading showtimes…"));
+  try {
+    const resp = await fetch(`/api/showtimes?date=${encodeURIComponent(day)}${refresh ? "&refresh=1" : ""}`);
+    const body = await resp.json();
+    if (!resp.ok) throw new Error(body.error || `HTTP ${resp.status}`);
+    data = body;
+    render();
+  } catch (err) {
+    data = null;
+    status.textContent = "";
+    out.replaceChildren(el("div", { class: "banner" }, `Fetch failed: ${err.message}`));
+  } finally {
+    button.disabled = false;
+    link.removeAttribute("aria-disabled");
+    out.setAttribute("aria-busy", "false");
+    busy = false;
+  }
+}
+
+// Mean of whichever of IMDb (x10) and RT critics exist, on a 0-100 scale.
+function overall(m) {
+  const parts = [m.imdb_rating == null ? null : parseFloat(m.imdb_rating) * 10, m.rt_critics]
+    .filter(v => v != null && !Number.isNaN(v));
+  return parts.length ? parts.reduce((x, y) => x + y, 0) / parts.length : null;
+}
+
+function compare(a, b) {
+  const byTitle = a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+  const value = m => sortKey === "imdb" ? (m.imdb_rating == null ? null : parseFloat(m.imdb_rating))
+                   : sortKey === "rt" ? m.rt_critics
+                   : sortKey === "overall" ? overall(m) : null;
+  if (sortKey === "title") return byTitle;
+  const va = value(a), vb = value(b);
+  if (va == null && vb == null) return byTitle;
+  if (va == null) return 1;
+  if (vb == null) return -1;
+  return vb - va || byTitle;
+}
+
+// Fandango's "(YYYY)" suffix, dropped when it repeats the release year shown below the title.
+function displayTitle(m) {
+  const year = (m.release_date || "").slice(0, 4);
+  return year ? m.title.replace(new RegExp(`\\s*\\(${year}\\)$`), "") : m.title;
+}
+
+const ROTTEN_BELOW = 60;
+const SVG = "http://www.w3.org/2000/svg";
+
+// RT's green splat, shown for critics scores below ROTTEN_BELOW.
+function splat() {
+  const svg = document.createElementNS(SVG, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("class", "splat");
+  svg.setAttribute("aria-hidden", "true");
+  const blobs = [[12, 12, 6.5], [12, 5.5, 3], [18.2, 9.5, 3], [16.8, 17, 3], [8, 17.5, 3], [5.8, 9.2, 3],
+                 [3.2, 4.5, 1.7], [21, 4.2, 1.4], [21.5, 16.5, 1.6], [3.5, 20, 1.5], [13.5, 22, 1.2]];
+  for (const [cx, cy, r] of blobs) {
+    const c = document.createElementNS(SVG, "circle");
+    for (const [k, v] of Object.entries({ cx, cy, r, fill: "#2eb34d" })) c.setAttribute(k, v);
+    svg.append(c);
+  }
+  return svg;
+}
+
+function scores(m) {
+  const imdbValue = m.imdb_rating ?? "—";
+  const imdbParts = [el("span", { class: "imdb-logo", "aria-hidden": "true" }, "IMDb"),
+                     el("span", { class: "value" }, imdbValue)];
+  const imdbLabel = `IMDb rating ${m.imdb_rating ?? "unavailable"}`;
+  const imdb = m.imdb_id
+    ? el("a", { href: `https://www.imdb.com/title/${m.imdb_id}/`, target: "_blank", rel: "noopener",
+                "aria-label": imdbLabel }, ...imdbParts)
+    : el("span", { class: "none", "aria-label": imdbLabel }, ...imdbParts);
+  const rtValue = m.rt_critics == null ? "—" : `${m.rt_critics}%`;
+  const rotten = m.rt_critics != null && m.rt_critics < ROTTEN_BELOW;
+  const rtParts = [rotten ? splat() : el("span", { "aria-hidden": "true" }, "🍅"), el("span", { class: "value" }, rtValue)];
+  const rtLabel = `Rotten Tomatoes critics ${m.rt_critics == null ? "unavailable" : `${rtValue}${rotten ? ", rotten" : ""}`}`;
+  const rt = m.rt_url
+    ? el("a", { href: m.rt_url, target: "_blank", rel: "noopener", "aria-label": rtLabel }, ...rtParts)
+    : el("span", { class: "none", "aria-label": rtLabel }, ...rtParts);
+  return el("div", { class: "scores" }, imdb, rt);
+}
+
+function meta(m) {
+  const parts = [];
+  if (m.release_date) parts.push(formatDay(m.release_date, { month: "short", day: "numeric", year: "numeric" }));
+  if (m.genres && m.genres.length) parts.push(m.genres.join(", "));
+  if (m.runtime) parts.push(`${Math.floor(m.runtime / 60)}h ${m.runtime % 60}m`);
+  return el("div", { class: "meta" }, parts.join(" · "));
+}
+
+function more(m) {
+  if (!m.rt_consensus && !m.synopsis) return "";
+  const box = el("details", {}, el("summary", {}, "More"));
+  if (m.rt_consensus) box.append(el("p", {}, el("span", { class: "label" }, "Critics Consensus: "), m.rt_consensus));
+  if (m.synopsis) box.append(el("p", {}, m.synopsis));
+  return box;
+}
+
+function chip(s, isToday, now) {
+  const past = s.status === "pastshowtime" || (isToday && s.at < now);
+  const soldOut = s.status === "soldout";
+  const cls = ["chip", past ? "past" : "", soldOut ? "soldout" : ""].join(" ").trim();
+  const note = soldOut ? " (sold out)" : past ? " (started)" : "";
+  const parts = [s.label, ...(note ? [el("span", { class: "sr-only" }, note)] : [])];
+  return soldOut || !s.ticket_url
+    ? el("span", { class: cls }, ...parts)
+    : el("a", { class: cls, href: s.ticket_url, target: "_blank", rel: "noopener" }, ...parts);
+}
+
+function theaterBlock(t, isToday, now) {
+  const groups = new Map();
+  for (const s of t.showtimes) {
+    const key = s.tags.length ? s.tags.join(" · ") : "Standard";
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(s);
+  }
+  const block = el("section", { class: "theater" }, el("h3", {}, t.name));
+  for (const [format, shows] of groups) {
+    block.append(el("div", { class: "group" }, el("span", { class: "format" }, format),
+      el("div", { class: "times" }, ...shows.map(s => chip(s, isToday, now)))));
+  }
+  return block;
+}
+
+function render() {
+  if (!data) return;
+  const { day: today, now } = wallClock();
+  const isToday = data.date === today;
+  const out = [];
+  if (data.failed.length) out.push(el("div", { class: "banner" }, `Couldn't load: ${data.failed.join(", ")}`));
+  for (const w of data.warnings) out.push(el("div", { class: "banner" }, w));
+  if (daysBetween(today, data.date) > FAR_DAYS) {
+    out.push(el("div", { class: "banner" }, "Dates more than a week out are often only partly published."));
+  }
+  if (data.no_showtimes) out.push(el("p", { class: "empty" }, "No showtimes published for this date."));
+  for (const m of [...data.movies].sort(compare)) {
+    const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), more(m));
+    const top = el("div", { class: "top" },
+      m.poster ? el("img", { class: "poster", src: m.poster, alt: "", loading: "lazy" }) : "", info);
+    const card = el("article", { class: "card" }, top);
+    for (const t of m.theaters) card.append(theaterBlock(t, isToday, now));
+    out.push(card);
+  }
+  document.getElementById("out").replaceChildren(...out);
+  const fetched = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
+  const count = `${data.movies.length} movie${data.movies.length === 1 ? "" : "s"}`;
+  document.getElementById("status").textContent =
+    `${formatDay(data.date, { weekday: "short", month: "short", day: "numeric" })} · ${count} · fetched ${fetched}`;
+}
+
+document.getElementById("day").value = wallClock().day;
+document.getElementById("controls").addEventListener("submit", e => {
+  e.preventDefault();
+  fetchDay();
+});
+document.getElementById("refresh").addEventListener("click", e => {
+  e.preventDefault();
+  fetchDay(true);
+});
+for (const b of document.querySelectorAll(".sort button")) {
+  b.addEventListener("click", () => {
+    sortKey = b.dataset.sort;
+    for (const o of document.querySelectorAll(".sort button")) o.setAttribute("aria-pressed", o === b);
+    render();
+  });
+}
+fetchDay();
+</script>
+</body>
+</html>

@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" prefix="fb: http://www.facebook.com/2008/fbml og: http://opengraphprotocol.org/schema/">
+    <head prefix="og: http://ogp.me/ns# flixstertomatoes: http://ogp.me/ns/apps/flixstertomatoes#">
+
+        
+            <script>
+                const encodedData = sessionStorage.getItem('oneTrustSyncData');
+                let id, token;
+
+                if (encodedData) {
+                    try {
+                        const oneTrustSyncData = JSON.parse(atob(encodedData));
+                        id = oneTrustSyncData?.id;
+                        token = oneTrustSyncData?.token;
+                    } catch (e) {}
+                }
+
+                if (id && token) {
+                    var OneTrust = {
+                        dataSubjectParams: {
+                            id,
+                            isAnonymous: false,
+                            token
+                        }
+                    };
+                }
+            </script>
+            
+            <script
+                charset="UTF-8"
+                crossorigin="anonymous"
+                data-domain-script="01978557-1604-76a7-ad7c-18216757cf52"
+                integrity="sha384-ZSwMA1OqSOznvxMtYdWlw0CUYqxpHjUOjfz9IcOnQUXvWoX7QfD7wjN7tgv+SpLT"
+                src="https://cdn.cookielaw.org/consent/01978557-1604-76a7-ad7c-18216757cf52/otSDKStub.js"
+                type="text/javascript"
+            >
+            </script>
+            <script type="text/javascript">
+                function OptanonWrapper() {
+                    if (OnetrustActiveGroups.includes('7')) {
+                        document.querySelector('search-results-nav-manager')?.setAlgoliaInsightUserToken?.();
+                    }
+                }
+            </script>
+            
+
+            
+                <script
+                    ccpa-opt-out-ids="USP"
+                    ccpa-opt-out-geo="US"
+                    ccpa-opt-out-lspa="false"
+                    charset="UTF-8"
+                    src="https://cdn.cookielaw.org/opt-out/otCCPAiab.js"
+                    type="text/javascript"
+                >
+                </script>
+            
+        
+
+        
+            
+            <script src="/assets/pizza-pie/javascripts/bundles/roma/rt-common.js?single"></script>
+            
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" sizes="76x76" type="image/x-icon" href="https://www.rottentomatoes.com/assets/pizza-pie/images/favicon.ico" />
+
+        
+            <title>Search Results | Rotten Tomatoes</title>
+            <meta name="description" content="Rotten Tomatoes, home of the Tomatometer, is the most trusted measurement of quality for Movies & TV. The definitive site for Reviews, Trailers, Showtimes, and Tickets">
+
+            
+
+            
+                
+            
+
+            
+
+            
+                <meta property="fb:app_id" content="">
+                <meta property="og:site_name" content="Rotten Tomatoes">
+                <meta property="og:title" content="Search Results">
+
+                <meta property="og:description" content="Rotten Tomatoes, home of the Tomatometer, is the most trusted measurement of quality for Movies & TV. The definitive site for Reviews, Trailers, Showtimes, and Tickets">
+                <meta property="og:type" content="">
+                <meta property="og:url" content="">
+                <meta property="og:image" content="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/RT_TwitterCard_2018.jpg">
+                <meta property="og:locale" content="en_US">
+            
+
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:image" content="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/RT_TwitterCard_2018.jpg">
+            <meta name="twitter:title" content="Search Results">
+            <meta name="twitter:text:title" content="Search Results">
+            <meta name="twitter:description" content="Rotten Tomatoes, home of the Tomatometer, is the most trusted measurement of quality for Movies & TV. The definitive site for Reviews, Trailers, Showtimes, and Tickets">
+            <meta name="twitter:site" content="@rottentomatoes">
+
+            <!-- JSON+LD -->
+            
+
+            
+            <script>
+                var dataLayer = dataLayer || [];
+                dataLayer.push({"webVersion":"node","rtVersion":3.1,"loggedInStatus":"","customerId":""});
+            </script>
+
+            
+                <script id="mps-page-integration">
+                    window.mpscall = {"cag[score]":null,"cag[certified_fresh]":null,"cag[fresh_rotten]":null,"cag[rating]":null,"cag[release]":null,"cag[movieshow]":null,"cag[genre]":null,"cag[urlid]":null,"cat":"search|results","field[env]":"production","field[rtid]":null,"path":"/search","site":"rottentomatoes-web","title":"Search Results","type":"results"};
+                    
+                    var mpsopts={'host':'app.mps.vsnt.net', 'updatecorrelator':1};
+                    var mps=mps||{};mps._ext=mps._ext||{};mps._adsheld=[];mps._queue=mps._queue||{};mps._queue.mpsloaded=mps._queue.mpsloaded||[];mps._queue.mpsinit=mps._queue.mpsinit||[];mps._queue.gptloaded=mps._queue.gptloaded||[];mps._queue.adload=mps._queue.adload||[];mps._queue.adclone=mps._queue.adclone||[];mps._queue.adview=mps._queue.adview||[];mps._queue.refreshads=mps._queue.refreshads||[];mps.__timer=Date.now||function(){return+new Date};mps.__intcode="v2";if(typeof mps.getAd!="function")mps.getAd=function(adunit){if(typeof adunit!="string")return false;var slotid="mps-getad-"+adunit.replace(/\W/g,"");if(!mps._ext||!mps._ext.loaded){mps._queue.gptloaded.push(function(){typeof mps._gptfirst=="function"&&mps._gptfirst(adunit,slotid);mps.insertAd("#"+slotid,adunit)});mps._adsheld.push(adunit)}return'<div id="'+slotid+'" class="mps-wrapper" data-mps-fill-slot="'+adunit+'"></div>'};
+                </script>
+                <script src="//app.mps.vsnt.net/fetch/ext/load-rottentomatoes-web.js?nowrite=2" id="mps-load"></script>
+            
+        
+
+        
+        
+
+        <link rel="manifest" href="https://www.rottentomatoes.com/assets/pizza-pie/manifest/manifest.json" />
+
+        <link rel="apple-touch-icon" href="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/apple-touch-icon-60.jpg" />
+        <link rel="apple-touch-icon" sizes="152x152" href="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/apple-touch-icon-152.jpg" />
+        <link rel="apple-touch-icon" sizes="167x167" href="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/apple-touch-icon-167.jpg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://www.rottentomatoes.com/assets/pizza-pie/head-assets/images/apple-touch-icon-180.jpg" />
+
+        
+            <!-- iOS Smart Banner -->
+            <meta name="apple-itunes-app" content="app-id=6673916573">
+        
+
+        
+        
+
+        
+        <meta name="google-site-verification" content="VPPXtECgUUeuATBacnqnCm4ydGO99reF-xgNklSbNbc" />
+
+        
+        <meta name="msvalidate.01" content="034F16304017CA7DCF45D43850915323" />
+        <meta name="theme-color" content="#FA320A">
+
+        <!-- DNS prefetch -->
+        <meta http-equiv="x-dns-prefetch-control" content="on">
+        
+            <link rel="dns-prefetch" href="//www.rottentomatoes.com" />
+        
+        
+            <link rel="preconnect" href="//www.rottentomatoes.com" />
+        
+
+        
+    
+            <link rel="stylesheet" href="/assets/pizza-pie/stylesheets/bundles/layouts/default.5047cf9b25e.css" />
+
+            
+        
+
+    <link rel="preload" href="/assets/pizza-pie/stylesheets/bundles/pages/search.2697d48faa3.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+
+
+        <script>
+            window.RottenTomatoes = {};
+            window.RTLocals = {};
+            window.nunjucksPrecompiled = {};
+            window.__RT__ = {};
+        </script>
+
+        
+            
+            <script src="https://cdn.jwplayer.com/libraries/U8MHzHHR.js"></script>
+            <script src="https://sb.scorecardresearch.com/c2/plugins/streamingtag_plugin_jwplayer.js"></script>
+        
+
+        
+        
+    </head>
+    
+    <body
+        class="body no-touch js-mptd-layout"
+        data-AdsGlobalSkinTakeoverManager="body"
+        data-SearchResultsNavManager="body"
+    >
+        <cookie-manager></cookie-manager>
+        <device-inspection-manager endpoint="https://www.rottentomatoes.com/napi/device/inspection"></device-inspection-manager>
+        <user-activity-manager></user-activity-manager>
+        <user-identity-manager></user-identity-manager>
+        <ad-unit-manager></ad-unit-manager>
+
+        <auth-initiate-manager
+    data-ArtiManager="authInitiateManager"
+    data-WatchlistButtonManager="authInitiateManager:createAccount"
+>
+</auth-initiate-manager>
+<auth-profile-manager data-AuthInitiateManager="authProfileManager"></auth-profile-manager>
+<auth-validation-manager data-AuthInitiateManager="authValidation"></auth-validation-manager>
+<overlay-base
+    data-AuthInitiateManager="overlayBase:close"
+    data-AuthProfileManager="overlayBase"
+    data-PagePollsIndexManager="authOverlay:close"
+    hidden
+>
+    <overlay-flows data-AuthInitiateManager="overlayFlows" data-AuthProfileManager="overlayFlows" slot="content">
+        <action-icon
+            slot="close"
+            class="auth-overlay__icon-button auth-overlay__icon-button--close"
+            proxy-aria-label="Close"
+            data-qa="close-overlay-btn"
+            icon="close"
+        ></action-icon>
+
+    </overlay-flows>
+</overlay-base>
+
+<aside aria-label="Notifications">
+    <notification-alert data-AuthInitiateManager="authSuccess" animate hidden role="status">
+        <rt-icon icon="checkmark-circle-filled"></rt-icon>
+        <span>Signed in</span>
+    </notification-alert>
+</aside>
+
+<div id="auth-templates" data-AuthInitiateManager="authTemplates">
+    <template slot="screens" id="account-create-username-screen">
+  <account-create-username-screen data-qa="account-create-username-screen">
+    <input-label slot="input-username" state="default" data-qa="username-input-label">
+      <label slot="label" for="create-username-input">Username</label>
+      <input slot="input" id="create-username-input" type="text" placeholder="Username" data-qa="username-input"/>
+    </input-label>
+    <rt-button slot="btn-continue" data-qa="continue-btn" disabled type="cta-large">
+      Continue
+    </rt-button>
+    <rt-text class="terms-and-policies" slot="terms-and-policies" size="0.75">
+      By joining, you agree to the <rt-link href="https://www.rottentomatoes.com/policies/terms-and-policies" target="_blank" data-qa="terms-policies-link">Terms and Policies</rt-link> and
+      the <rt-link href="https://www.versantprivacy.com/privacy" target="_blank" data-qa="privacy-policy-link">Privacy Policy</rt-link> and to receive email from 
+      <rt-link href="//www.fandango.com/about-us" target="_blank" data-qa="about-fandango-link">Fandango Media Brands</rt-link>.
+    </rt-text>
+  </account-create-username-screen>
+</template>
+
+    <template slot="screens" id="account-email-change-success-screen">
+  <account-email-change-success-screen data-qa="login-create-success-screen">
+    <rt-text slot="message" size="1.5" style="--fontWeight: var(--franklinGothicDemi);">Email change successful</rt-text>
+    <rt-text slot="submessage">You are signed out for your security. </br> Please sign in again.</rt-text>
+    <img slot="icon" src="/assets/pizza-pie/images/icons/cognito-success.3a3d5f32fab.svg" width="111" height="105" />
+  </account-email-change-success-screen>
+</template>
+
+    <template slot="screens" id="account-verifying-email-screen">
+  <account-verifying-email-screen data-qa="account-verifying-email-screen">
+    <img slot="icon" src="/assets/pizza-pie/images/icons/cognito-auth-verify.e74a69e9a77.svg" alt="email" />
+    <rt-text slot="status"> Verifying your email... </rt-text>
+    <rt-button
+      type="cta-large"
+      href="/?authFlowScreen=loginStartScreen"
+      slot="retry-link"
+      size="0.875"
+      style="--fontWeight: var(--franklinGothicMedium);"
+      data-qa="retry-link"
+    >
+      Retry
+    </rt-button>
+    <rt-text slot="terms-and-policies" size="0.75">
+      By continuing, you agree to the 
+      <rt-link href="https://www.rottentomatoes.com/policies/terms-and-policies" target="_blank" data-qa="terms-policies-link" style="--textColor: var(--blueLink);">Terms and Policies</rt-link> 
+      and the 
+      <rt-link href="https://www.versantprivacy.com/privacy" target="_blank" data-qa="privacy-policy-link" style="--textColor: var(--blueLink);">Privacy Policy</rt-link> 
+      and to receive email from 
+      <rt-link href="//www.fandango.com/about-us" target="_blank" data-qa="about-fandango-link" style="--textColor: var(--blueLink);">Fandango Media Brands</rt-link>.
+    </rt-text>
+  </account-verifying-email-screen>
+</template>
+    <template slot="screens" id="cognito-loading">
+    <div>
+        <loading-spinner id="cognito-auth-loading-spinner"></loading-spinner>
+        <style>
+            #cognito-auth-loading-spinner {
+                font-size: 2rem;
+                transform: translate(calc(100% - 1em), 250px);
+                width: 50%;
+            }
+        </style>
+    </div>
+</template>
+
+    <template slot="screens" id="login-check-email-screen">
+  <login-check-email-screen data-qa="login-check-email-screen" email="user@email.com">
+    <rt-text slot="got-email-message" size="0.875">
+      Didn't you get the email?
+    </rt-text>
+    <rt-button slot="resend-email-link" size="0.875" type="cta-large" data-qa="resend-email-link">
+      Resend email
+    </rt-button>
+    <rt-link context="label" slot="trouble-login-link" size="0.875" href="/reset-client" data-qa="reset-link">Having trouble logging in?</rt-link>
+
+    <rt-text class="terms-and-policies" slot="terms-and-policies" size="0.75">
+      By continuing, you agree to the
+      <rt-link href="https://www.rottentomatoes.com/policies/terms-and-policies" target="_blank" data-qa="terms-policies-link" style="--textColor: var(--blueLink);">Terms and Policies</rt-link>
+      and the
+      <rt-link href="https://www.versantprivacy.com/privacy" target="_blank" data-qa="privacy-policy-link" style="--textColor: var(--blueLink);">Privacy Policy</rt-link>
+      and to receive email from
+      <rt-link href="//www.fandango.com/about-us" target="_blank" data-qa="about-fandango-link" style="--textColor: var(--blueLink);">Fandango Media Brands</rt-link>.
+    </rt-text>
+  </login-check-email-screen>
+</template>
+
+    <template slot="screens" id="login-error-screen">
+    <login-error-screen data-qa="login-error">
+        <rt-text slot="header" size="1.5" context="heading" data-qa="header">
+            Something went wrong...
+        </rt-text>
+        <rt-text slot="description-1" size="1" context="label" data-qa="description1">
+            Please try again.
+        </rt-text>
+        <img slot="image" src="/assets/pizza-pie/images/icons/cognito-error.c55e509a7fd.svg" />
+        <rt-text hidden slot="description-2" size="1" context="label" data-qa="description2"></rt-text>
+        <rt-link slot="cta-link" hidden context="label" size="0.875" data-qa="retry-link">Retry</rt-link>
+    </login-error-screen>
+</template>
+
+    <template slot="screens" id="login-enter-password-screen">
+  <login-enter-password-screen data-qa="login-enter-password-screen">
+    <rt-text slot="title" size="1.5" style="--fontWeight: var(--franklinGothicMedium);">
+      Welcome back!
+    </rt-text>
+    <rt-text slot="username" data-qa="user-email">
+      username@email.com
+    </rt-text>
+    <input 
+      slot="username-hidden" type="email" autocomplete="username" 
+      tabindex="-1" aria-hidden="true" id="username-hidden"
+    >
+    <input-label slot="input-password" state="default" data-qa="password-input-label">
+      <label slot="label" for="pass">Password</label>
+      <input
+        slot="input" autocomplete="current-password" data-qa="password-input"
+        id="pass" name="password" placeholder="Password" type="password"
+      >
+    </input-label>
+    <rt-button disabled slot="continue-button" type="cta-large" data-qa="continue-btn">
+      Continue
+    </rt-button>
+    <rt-button slot="email-login-button" theme="light" shape="pill" data-qa="send-email-btn">
+      Send email to verify
+    </rt-button>
+    <rt-link slot="forgot-password-link" context="label" size="0.875" data-qa="forgot-password-link">Forgot password</rt-link>
+    <rt-text class="terms-and-policies" slot="terms-and-policies" size="0.75">
+      By continuing, you agree to the
+      <rt-link href="https://www.rottentomatoes.com/policies/terms-and-policies" target="_blank" data-qa="terms-policies-link" style="--textColor: var(--blueLink);">Terms and Policies</rt-link>
+      and the
+      <rt-link href="https://www.versantprivacy.com/privacy" target="_blank" data-qa="privacy-policy-link" style="--textColor: var(--blueLink);">Privacy Policy</rt-link>
+      and to receive email from
+      <rt-link href="//www.fandango.com/about-us" target="_blank" data-qa="about-fandango-link" style="--textColor: var(--blueLink);">Fandango Media Brands</rt-link>.
+    </rt-text>
+  </login-enter-password-screen>
+</template>
+
+    <template slot="screens" id="login-start-screen">
+  <login-start-screen data-qa="login-start-screen">
+    <input-label
+      slot="input-email"
+      state="default"
+      data-qa="email-input-label"
+    >
+      <label slot="label" for="login-email-input">Email address</label>
+      <input
+        slot="input"
+        autocomplete="username"
+        id="login-email-input"
+        placeholder="Email address"
+        type="email"
+        data-qa="email-input"
+      />
+    </input-label>
+    <input class="hide" type="password"></input>
+    <rt-button disabled slot="email-login-button" type="cta-large" data-qa="continue-btn">
+      Continue
+    </rt-button>
+    <rt-button
+      slot="google-login-button"
+      shape="pill" theme="light" style="--buttonHeight: 52px; --borderRadius: 32px;"
+      data-qa="google-login-btn" data-type="google"
+    >
+      <div class="social-login-btn-content">
+        <img height="16px" width="16px" src="/assets/pizza-pie/images/vendor/google/google_logo.28d9eb28faa.svg" />
+        Continue with Google
+      </div>
+    </rt-button>
+    <rt-button
+      slot="apple-login-button"
+      shape="pill" theme="light" style="--buttonHeight: 52px; --borderRadius: 32px;"
+      data-qa="apple-login-btn" data-type="apple"
+    >
+      <div class="social-login-btn-content">
+        <rt-icon size-pixel="20" icon="apple" style="--topPosition: 3%"></rt-icon>
+        Continue with apple
+      </div>
+    </rt-button>
+    <rt-link slot="reset-link" class="reset-link" context="label" size="0.875" href="/reset-client" data-qa="reset-link">
+      Having trouble logging in?
+    </rt-link>
+    <rt-text class="terms-and-policies" slot="terms-and-policies" size="0.75">
+      By continuing, you agree to the
+      <rt-link href="https://www.rottentomatoes.com/policies/terms-and-policies" target="_blank" data-qa="terms-policies-link" style="--textColor: var(--blueLink);">Terms and Policies</rt-link>
+      and the
+      <rt-link href="https://www.versantprivacy.com/privacy" target="_blank" data-qa="privacy-policy-link" style="--textColor: var(--blueLink);">Privacy Policy</rt-link>
+      and to receive email from
+      <rt-link href="//www.fandango.com/about-us" target="_blank" data-qa="about-fandango-link" style="--textColor: var(--blueLink);">Fandango Media Brands</rt-link>.
+    </rt-text>
+  </login-start-screen>
+</template>
+
+    <template slot="screens" id="login-success-screen">
+  <login-success-screen data-qa="login-success-screen">
+    <rt-text slot="status" size="1.5">
+      Login successful!
+    </rt-text>
+    <img slot="icon" src="/assets/pizza-pie/images/icons/cognito-success.3a3d5f32fab.svg" width="111" height="105" />
+  </login-success-screen>
+</template>
+    <template slot="screens" id="cognito-opt-in-us">
+  <auth-optin-screen data-qa="auth-opt-in-screen">
+    <div slot="newsletter-text">
+      <h2 class="cognito-optin-form__header unset">Let's keep in touch!</h2>
+    </div>
+    <img slot="image" class="image" src="https://images.fandango.com/cms/assets/97c33f00-313f-11ee-9aaf-6762c75465cf--newsletter.png" alt="Rotten Tomatoes Newsletter">>
+    <h2 slot="sub-title" class="subTitle unset">Sign up for the Rotten Tomatoes newsletter to get weekly updates on:</h2>
+    <ul slot="options">
+      <li class="icon-item">Upcoming Movies and TV shows</li>
+      <li class="icon-item">Rotten Tomatoes Podcast</li>
+      <li class="icon-item">Media News + More</li>
+    </ul>
+    <rt-button slot="opt-in-button" data-qa="auth-opt-in-screen-opt-in-btn">
+      Sign me up
+    </rt-button>
+    <rt-button slot="opt-out-button" class="button--outline" data-qa="auth-opt-in-screen-opt-out-btn">
+      No thanks
+    </rt-button>
+    <p slot="foot-note">
+      By clicking "Sign Me Up," you are agreeing to receive occasional emails and communications from Fandango Media
+      (Fandango and Rotten Tomatoes) and consenting to Fandango's
+      <a href="https://www.versantprivacy.com/privacy" class="optin-link" target="_blank" rel="noopener" data-qa="auth-name-screen-privacy-policy-link">Privacy Policy</a>
+      and 
+      <a href="https://www.rottentomatoes.com/policies/terms-and-policies" class="optin-link" target="_blank" rel="noopener" data-qa="auth-name-screen-privacy-policy-link">Terms and Policies</a>.
+      Please allow 10 business days for your account to reflect your preferences.
+    </p>
+  </auth-optin-screen>
+</template>
+    <template slot="screens" id="cognito-opt-in-foreign">
+  <auth-optin-screen data-qa="auth-opt-in-screen">
+    <div slot="newsletter-text">
+      <h2 class="cognito-optin-form__header unset">Let's keep in touch!</h2>
+    </div>
+    <img slot="image" class="image" src="https://images.fandango.com/cms/assets/97c33f00-313f-11ee-9aaf-6762c75465cf--newsletter.png" alt="Rotten Tomatoes Newsletter">>
+    <h2 slot="sub-title" class="subTitle unset">Sign up for the Rotten Tomatoes newsletter to get weekly updates on:</h2>
+    <ul slot="options">
+      <li class="icon-item">Upcoming Movies and TV shows</li>
+      <li class="icon-item">Rotten Tomatoes Podcast</li>
+      <li class="icon-item">Media News + More</li>
+    </ul>
+    <rt-button slot="opt-in-button" data-qa="auth-opt-in-screen-opt-in-btn">
+      Sign me up
+    </rt-button>
+    <rt-button slot="opt-out-button" class="button--outline" data-qa="auth-opt-in-screen-opt-out-btn">
+      No thanks
+    </rt-button>
+  </auth-optin-screen>
+</template>
+    <template slot="screens" id="cognito-opt-in-success">
+    <auth-verify-screen>
+        <rt-icon icon="checkmark-circle-filled" slot="icon"></rt-icon>
+        <p class="h3" slot="status">OK, got it!</p>
+    </auth-verify-screen>
+</template>
+
+</div>
+
+
+        <div id="emptyPlaceholder"></div> 
+
+        
+            
+            <script ASYNC src="//assets.adobedtm.com/launch-EN549327edc13e414a9beb5d61bfd9aac6.min.js"></script>
+            
+        
+
+        <div id="main" class="container rt-layout__body">
+            <header>
+                <a href="#main-page-content" class="skip-link">Skip to Main Content</a>
+
+                
+                    <mobile-android-banner env="production" hidden></mobile-android-banner>
+                    <rt-app-manager></rt-app-manager>
+                    <overlay-base
+                        data-RtAppManager="overlayBase:close"
+                        hidden
+                    >
+                        <rt-app-modal-content slot="content">
+                            <action-icon
+                                slot="btn-close"
+                                proxy-aria-label="Close"
+                                icon="close"
+                                data-RtAppManager="btnClose:click"
+                            ></action-icon>
+                            <rt-button slot="btn-download" type="cta-large" href="/device/app">
+                                DOWNLOAD THE APP
+                            </rt-button>
+                            <rt-button slot="btn-continue" type="cta-secondary-large" data-RtAppManager="btnContinue:click">
+                                CONTINUE IN BROWSER
+                            </rt-button>
+                        </rt-app-modal-content>
+                    </overlay-base>
+                
+
+                <div id="header_and_leaderboard">
+                    <div id="top_leaderboard_wrapper" class="leaderboard_wrapper ">
+                        <ad-unit hidden unit-display="desktop" unit-type="topbanner" adjust-height>
+                            <div slot="ad-inject"></div>
+                        </ad-unit>
+
+                        <ad-unit hidden unit-display="mobile" unit-type="mbanner">
+                            <div slot="ad-inject"></div>
+                        </ad-unit>
+                    </div>
+                </div>
+                
+
+  <rt-header-manager></rt-header-manager>
+
+  <rt-header
+    aria-label="Main"
+    class="navbar"
+    data-qa="header-nav-bar"
+    data-AdsGlobalNavTakeoverManager="header"
+    data-RtHeaderManager="rtHeader"
+    id="header-main"
+    role="navigation"
+    skeleton="panel"
+    
+  >
+
+  
+  <button
+    aria-label="Open aRTi"
+    class="arti-mobile"
+    data-ArtiManager="btnArti:click"
+    data-SearchResultsNavManager="btnArti"
+    slot="arti-mobile"
+  >
+    <img
+      alt="arti"
+      src="/assets/pizza-pie/images/arti.041d204c4a4.svg"
+    />
+  </button>
+  
+
+    <div slot="mobile-header-nav" data-SearchResultsNavManager="mobileHeaderNavWrap">
+        <rt-button
+          id="mobile-header-nav-btn"
+          proxy-aria-label="Open menu"
+          data-MobileHeaderNav="opener"
+          theme="transparent"
+          style="--buttonPadding: 0 4px 0 10px; --textColor: var(--white);"
+        >
+          <rt-icon icon="hamburger-menu" image ></rt-icon>
+        </rt-button>
+
+        <mobile-header-nav id="mobile-header-nav">
+                        <rt-img
+              slot="logo-image"
+              alt="Rotten Tomatoes"
+              fetchpriority="high"
+              src="/assets/pizza-pie/images/rt-tomato-logo.20c3bdbc97b.svg"
+            ></rt-img>
+            <div slot="menus-css"></div>
+            <div slot="menus"></div>
+        </mobile-header-nav>
+    </div>
+
+  <a
+    class="logo-wrap"
+    data-AdsGlobalNavTakeoverManager="logoLink"
+    data-SearchResultsNavManager="rtNavLogo"
+    href="/"
+    id="navbar"
+    slot="logo"
+  >
+    <img
+      alt="Rotten Tomatoes"
+      data-qa="header-logo"
+      data-AdsGlobalNavTakeoverManager="logo"
+      src="/assets/pizza-pie/images/rtlogo.9b892cff3fd.png"
+      fetchpriority="high"
+    />
+
+    
+      <div class="hide">
+        <ad-unit hidden unit-display="desktop,mobile" unit-type="logorepeat" unit-targeting="ploc=rtlogo;">
+          <div slot="ad-inject"></div>
+        </ad-unit>
+      </div>
+    
+  </a>
+
+  <search-results-nav-manager
+    
+      arti-search-nav-enabled="true"
+    
+  >
+
+  </search-results-nav-manager>
+
+  <search-results-nav
+    data-adobe-id="global-nav-search"
+    data-SearchResultsNavManager="search"
+    slot="search"
+    skeleton="chip"
+  >
+    <search-results-controls
+      data-SearchResultsNavManager="searchControls"
+      slot="controls"
+    >
+      <input
+        aria-label="Search"
+        data-AdsGlobalNavTakeoverManager="searchInput"
+        data-SearchResultsNavManager="inputText:click,input,keydown"
+        data-qa="search-input"
+        placeholder="Search"
+        slot="search-input"
+        type="text"
+      />
+      <rt-button
+        class="search-clear"
+        data-qa="search-clear"
+        data-AdsGlobalNavTakeoverManager="searchClearBtn"
+        data-SearchResultsNavManager="clearBtn:click"
+        hidden
+        slot="search-clear"
+        theme="transparent"
+      >
+        <rt-icon icon="close" size-pixel="20"></rt-icon>
+      </rt-button>
+      <rt-link
+        class="search-submit"
+        data-qa="search-submit"
+        data-AdsGlobalNavTakeoverManager="searchSubmitBtn"
+        data-SearchResultsNavManager="submitBtn:click"
+        href="/search"
+        slot="search-submit"
+      >
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px;">
+          <sr-text>Submit search</sr-text>
+          <rt-icon icon="search" size-pixel="16"></rt-icon>
+        </span>
+      </rt-link>
+      <rt-button
+        class="search-cancel"
+        data-qa="search-cancel"
+        data-AdsGlobalNavTakeoverManager="searchCancelBtn"
+        data-SearchResultsNavManager="cancelBtn:click"
+        hidden
+        size="0.875"
+        slot="search-cancel"
+        theme="transparent"
+      >
+        Cancel
+      </rt-button>
+    </search-results-controls>
+
+    <search-results
+      aria-expanded="false"
+      data-SearchResultsNavManager="searchResults"
+      hidden
+      slot="results"
+    >
+    </search-results>
+  </search-results-nav>
+
+  <ul slot="nav-links">
+    <li>
+      <a
+        href="/about"
+        data-qa="header:link-whats-tmeter"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        About Rotten Tomatoes&reg;
+      </a>
+    </li>
+    <li>
+      <a
+        href="/critics"
+        data-qa="header:link-critics-home"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        Critics
+      </a>
+    </li>
+    <li data-RtHeaderManager="loginLink">
+      <ul>
+        <li>
+          <button
+            id="masthead-show-login-btn"
+            class="js-cognito-signin button--link"
+            data-AuthInitiateManager="btnSignIn:click"
+            data-qa="header:login-btn"
+            data-AdsGlobalNavTakeoverManager="text"
+          >
+            Login/signup
+          </button>
+        </li>
+      </ul>
+    </li>
+    <li class="hide" data-RtHeaderManager="userItem:keydown,keyup,mouseenter" data-qa="header:user">
+      <a
+        class="masthead-user-link"
+        data-RtHeaderManager="navUserlink:focus"
+        data-UserIdentityManager="profileLink"
+        rel="nofollow"
+        data-qa="user-profile-link"
+      >
+        <p
+          data-AdsGlobalNavTakeoverManager="text"
+          data-RtHeaderManager="navUserFirstName"
+          data-qa="user-profile-name"
+        ></p>
+        <rt-icon
+          data-AdsGlobalNavTakeoverManager="text"
+          icon="dropdown-arrow-down"
+          image
+        >
+        </rt-icon>
+      </a>
+      <rt-header-profile-info
+        class="hide"
+        data-RtHeaderManager="profileInfo:focusout,mouseleave"
+      ></rt-header-profile-info>
+    </li>
+  </ul>
+
+  <rt-header-nav slot="nav-dropdowns">
+    
+      <button
+        aria-label="Open aRTi"
+        class="arti-desktop"
+        data-ArtiManager="btnArti:click"
+        slot="arti-desktop"
+      >
+        <img
+          alt="arti"
+          src="/assets/pizza-pie/images/arti.041d204c4a4.svg"
+        />
+  </button>
+    
+    <rt-header-nav-item slot="movies" data-qa="masthead:movies-dvds">
+      <a
+        class="unset"
+        slot="link"
+        href="/browse/movies_in_theaters/sort:popular"
+        data-qa="masthead:movies-dvds-link"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        Movies
+      </a>
+      <rt-header-nav-item-dropdown aria-expanded="false" slot="dropdown" data-qa="movies-menu">
+        <rt-header-nav-item-dropdown-list slot="column" data-qa="header-movies-in-theaters">
+          <p slot="title" class="h4" data-qa="movies-in-theaters-main-link"><a class="unset" href="/browse/movies_in_theaters/sort:popular">Movies in theaters</a></p>
+          <ul slot="links">
+            <li data-qa="in-theaters-item">
+              <a href="/browse/movies_in_theaters/sort:newest" data-qa="opening-this-week-link">Opening This Week</a>
+            </li>
+            <li data-qa="in-theaters-item">
+              <a href="/browse/movies_in_theaters/sort:top_box_office" data-qa="top-box-office-link">Top Box Office</a>
+            </li>
+            <li data-qa="in-theaters-item">
+              <a href="/browse/movies_coming_soon/" data-qa="coming-soon-link">Coming Soon to Theaters</a>
+            </li>
+            <li data-qa="in-theaters-item">
+              <a href="/browse/movies_in_theaters/critics:certified_fresh~sort:popular" data-qa="certified-fresh-link">Certified Fresh Movies</a>
+            </li>
+          </ul>
+        </rt-header-nav-item-dropdown-list>
+        <rt-header-nav-item-dropdown-list slot="column" data-qa="header-on-dvd-streaming">
+          <p slot="title" class="h4" data-qa="dvd-streaming-main-link"><a class="unset" href="/browse/movies_at_home">Movies at Home</a></p>
+          <ul slot="links" data-curation="rt-nav-movies-at-home">
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/affiliates:fandango" data-qa="fandango-link">Fandango</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/affiliates:netflix" data-qa="netflix-link">Netflix</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/affiliates:apple-tv-plus" data-qa="apple-tv-link">Apple TV</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/affiliates:prime-video" data-qa="prime-video-link">Prime Video</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/sort:popular" data-qa="most-popular-streaming-movies-link">Most Popular Streaming movies</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home/critics:certified_fresh" data-qa="certified-fresh-movies-link">Certified Fresh movies</a>
+            </li>
+            
+            <li data-qa="movies-at-home-item">
+              <a href="/browse/movies_at_home" data-qa="browse-all-link">Browse all</a>
+            </li>
+            
+          </ul>
+        </rt-header-nav-item-dropdown-list>
+        <rt-header-nav-item-dropdown-list slot="column" data-qa="header-movies-more">
+          <p slot="title" class="h4">More</p>
+          <ul slot="links">
+            <li data-qa="what-to-watch-item">
+                <a href="https://editorial.rottentomatoes.com/rt-hub/what-to-watch" class="what-to-watch" data-qa="what-to-watch-link">What to Watch<rt-badge>New</rt-badge></a>
+            </li>
+          </ul>
+        </rt-header-nav-item-dropdown-list>
+        
+          <rt-header-nav-item-dropdown-list slot="column" cfp>
+            <p slot="title" class="h4">Certified fresh picks</p>
+            <ul slot="links" class="cfp-wrap" data-qa="header-certified-fresh-picks" data-curation="rt-nav-list-cf-picks">
+              
+                <li data-qa="cert-fresh-item">
+                  
+                  <a class="cfp-tile" href="/m/primetime" data-qa="cert-fresh-link">
+    <tile-dynamic data-qa="tile">
+        <rt-img
+            alt="Primetime poster image"
+            slot="image"
+            src="https://resizing.flixster.com/A08UVUc8y5jCAtc0R4nzukazQ4o=/130x187/v2/https://resizing.flixster.com/4LwHTZoxzkFKhQbST3KFF2Hm6Ps=/fit-in/180x240/v2/https://resizing.flixster.com/nkAjyNfvQ0czMcFMa0Gsjl5bI28=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzM5YWIzYTg3LWIxYmYtNDM1ZC1iZjg3LWQ1YWIwZTFmNjYwOS5qcGc="
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption" data-track="scores">
+            <div class="score-wrap">
+                <score-icon-critics
+                    certified
+                    sentiment="positive"
+                    size="1"
+                ></score-icon-critics>
+                <rt-text class="critics-score" size="1" context="label">89%</rt-text>
+            </div>
+            <span class="p--small">Primetime</span>
+            <span class="sr-only">Link to Primetime</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+              
+                <li data-qa="cert-fresh-item">
+                  
+                  <a class="cfp-tile" href="/m/ha_chan_shake_your_booty" data-qa="cert-fresh-link">
+    <tile-dynamic data-qa="tile">
+        <rt-img
+            alt="Ha-Chan, Shake Your Booty! poster image"
+            slot="image"
+            src="https://resizing.flixster.com/L_MgC6UQ3KVjogEy1eA_5BZoBbA=/130x187/v2/https://resizing.flixster.com/9pssRHWY40vZU4sug5mxLpFeVTU=/fit-in/180x240/v2/https://resizing.flixster.com/2VJzSmTwyHg9QbVaug_1dxKoiPE=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzQyNmMyNWUxLWVjNDUtNDM5YS04MjVkLTExYmEyZjVhMTg0Ni5qcGc="
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption" data-track="scores">
+            <div class="score-wrap">
+                <score-icon-critics
+                    certified
+                    sentiment="positive"
+                    size="1"
+                ></score-icon-critics>
+                <rt-text class="critics-score" size="1" context="label">90%</rt-text>
+            </div>
+            <span class="p--small">Ha-Chan, Shake Your Booty!</span>
+            <span class="sr-only">Link to Ha-Chan, Shake Your Booty!</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+              
+                <li data-qa="cert-fresh-item">
+                  
+                  <a class="cfp-tile" href="/m/the_incomer" data-qa="cert-fresh-link">
+    <tile-dynamic data-qa="tile">
+        <rt-img
+            alt="The Incomer poster image"
+            slot="image"
+            src="https://resizing.flixster.com/CREFlNu24u1Mu_uwcv0G7j_z__w=/130x187/v2/https://resizing.flixster.com/N2PQ20v1Ce1HebMCuPlIH_dkhPU=/fit-in/180x240/v2/https://resizing.flixster.com/qtZvRQ7jPu_BaOnYRVFER7i3ldo=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzU4ZDg1MjA1LTVmN2YtNGIzMy04MzE3LWU2Mzk1YjY5NjZjMy5qcGc="
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption" data-track="scores">
+            <div class="score-wrap">
+                <score-icon-critics
+                    certified
+                    sentiment="positive"
+                    size="1"
+                ></score-icon-critics>
+                <rt-text class="critics-score" size="1" context="label">94%</rt-text>
+            </div>
+            <span class="p--small">The Incomer</span>
+            <span class="sr-only">Link to The Incomer</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+            </ul>
+          </rt-header-nav-item-dropdown-list>
+        
+      </rt-header-nav-item-dropdown>
+    </rt-header-nav-item>
+
+    <rt-header-nav-item slot="tv" data-qa="masthead:tv">
+      <a
+        class="unset"
+        slot="link"
+        href="/browse/tv_series_browse/sort:popular"
+        data-qa="masthead:tv-link"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        Tv shows
+      </a>
+      <rt-header-nav-item-dropdown aria-expanded="false" slot="dropdown" data-qa="tv-menu">
+        
+          <rt-header-nav-item-dropdown-list slot="column" data-qa="header-tv-list1">
+            <p slot="title" class="h4" data-curation="rt-hp-text-list-3">
+              New TV Tonight
+            </p>
+            <ul slot="links" class="score-list-wrap">
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/brothers_2026/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="negative"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >53%</rt-text>
+        
+    </div>
+    <span>
+        
+            Brothers: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/youth/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >95%</rt-text>
+        
+    </div>
+    <span>
+        
+            Youth: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/trespasses/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >89%</rt-text>
+        
+    </div>
+    <span>
+        
+            Trespasses: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/american_hostage_2026/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >92%</rt-text>
+        
+    </div>
+    <span>
+        
+            American Hostage: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/line_of_fire_2026/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >91%</rt-text>
+        
+    </div>
+    <span>
+        
+            Line of Fire: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/the_great_british_bake_off/s17" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >100%</rt-text>
+        
+    </div>
+    <span>
+        
+            The Great British Bake Off: Season 17
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/american_horror_story/s13" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="empty"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score-empty"
+            context="label"
+            size="1"
+            style="--textColor: var(--grayLight4); --lineHeight: 1; --letterSpacing: 0.2em;" 
+        >--</rt-text>
+        
+    </div>
+    <span>
+        
+            American Horror Story: 13: Season 13
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/a_different_world_2026/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="negative"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >40%</rt-text>
+        
+    </div>
+    <span>
+        
+            A Different World: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+            </ul>
+            <a
+              class="a--short"
+              data-qa="tv-list1-view-all-link"
+              href="/browse/tv_series_browse/sort:newest"
+              slot="view-all-link"
+            >
+                View All
+            </a>
+          </rt-header-nav-item-dropdown-list>
+        
+
+        
+          <rt-header-nav-item-dropdown-list slot="column" data-qa="header-tv-list2">
+            <p slot="title" class="h4" data-curation="rt-hp-text-list-2">
+              Most Popular TV on RT
+            </p>
+            <ul slot="links" class="score-list-wrap">
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/lanterns/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >92%</rt-text>
+        
+    </div>
+    <span>
+        
+            Lanterns: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/neagley/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >94%</rt-text>
+        
+    </div>
+    <span>
+        
+            Neagley: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/monster_2022/s04" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="negative"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >38%</rt-text>
+        
+    </div>
+    <span>
+        
+            Monster: The Lizzie Borden Story: Season 4
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/american_hostage_2026/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="false"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >92%</rt-text>
+        
+    </div>
+    <span>
+        
+            American Hostage: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/slow_horses/s06" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >100%</rt-text>
+        
+    </div>
+    <span>
+        
+            Slow Horses: Season 6
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/mobland/s02" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >90%</rt-text>
+        
+    </div>
+    <span>
+        
+            MobLand: Season 2
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/the_gentlemen/s02" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >86%</rt-text>
+        
+    </div>
+    <span>
+        
+            The Gentlemen: Season 2
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/widows_bay/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >98%</rt-text>
+        
+    </div>
+    <span>
+        
+            Widow&#39;s Bay: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/furious/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >99%</rt-text>
+        
+    </div>
+    <span>
+        
+            Furious: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+                <li data-qa="list-item">
+                  <a class="score-list-item" href="/tv/youth/s01" data-qa="list-item-link">
+    <div class="score-wrap">
+        <score-icon-critics
+            certified="true"
+            sentiment="positive"
+            size="1"
+        ></score-icon-critics>
+        
+        <rt-text
+            class="critics-score"
+            context="label"
+            size="1"
+            style="--lineHeight: 1; --letterSpacing: 0.016em;"
+        >95%</rt-text>
+        
+    </div>
+    <span>
+        
+            Youth: Season 1
+        
+    </span>
+</a>
+                </li>
+              
+            </ul>
+            <a
+              class="a--short"
+              data-qa="tv-list2-view-all-link"
+              href="/browse/tv_series_browse/sort:popular?"
+              slot="view-all-link"
+            >
+                View All
+            </a>
+          </rt-header-nav-item-dropdown-list>
+        
+
+        <rt-header-nav-item-dropdown-list slot="column" data-qa="header-tv-more">
+          <p slot="title" class="h4">More</p>
+          <ul slot="links">
+            <li>
+              <a href="https://editorial.rottentomatoes.com/rt-hub/what-to-watch/" class="what-to-watch" data-qa="what-to-watch-link-tv">
+                What to Watch<rt-badge>New</rt-badge>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/sort:popular" data-qa="tv-best-link">
+                <span>Best TV Shows</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/sort:popular" data-qa="tv-popular-link">
+                <span>Most Popular TV</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/affiliates:fandango" data-qa="tv-fandango-at-home-link">
+                <span>Fandango</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/affiliates:paramount-plus" data-qa="tv-paramount-link">
+                <span>Paramount+</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/affiliates:netflix" data-qa="tv-netflix-link">
+                <span>Netflix</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/affiliates:prime-video" data-qa="tv-prime-video-link">
+                <span>Prime Video</span>
+              </a>
+            </li>
+            <li>
+              <a href="/browse/tv_series_browse/affiliates:apple-tv-plus" data-qa="tv-apple-tv-plus-link">
+                <span>Apple TV</span>
+              </a>
+            </li>
+          </ul>
+        </rt-header-nav-item-dropdown-list>
+
+        
+          <rt-header-nav-item-dropdown-list slot="column" cfp data-qa="header-certified-fresh-pick">
+            <p slot="title" class="h4">
+              Certified fresh pick
+            </p>
+            <ul slot="links" class="cfp-wrap" data-curation="rt-nav-list-cf-picks">
+              <li>
+                
+                <a class="cfp-tile" href="/tv/mobland/s02" data-qa="cert-fresh-link">
+    <tile-dynamic data-qa="tile">
+        <rt-img
+            alt="MobLand: Season 2 poster image"
+            slot="image"
+            src="https://resizing.flixster.com/7-9HCza7z0bTw7qwa1IwTbT3bUM=/130x187/v2/https://resizing.flixster.com/jpAOVzmp3B1k0ua4MPluVGC94Ok=/fit-in/180x240/v2/https://resizing.flixster.com/2EfeoWjrUaaGpfWzRZmO7L31LIs=/ems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vYjU0YTkzN2ItN2JmMC00NzA1LTg1M2ItYmRhN2VmZWVlNjFkLmpwZw=="
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption" data-track="scores">
+            <div class="score-wrap">
+                <score-icon-critics
+                    certified
+                    sentiment="positive"
+                    size="1"
+                ></score-icon-critics>
+                <rt-text class="critics-score" size="1" context="label">90%</rt-text>
+            </div>
+            <span class="p--small">MobLand: Season 2</span>
+            <span class="sr-only">Link to MobLand: Season 2</span>
+        </div>
+    </tile-dynamic>
+</a>
+              </li>
+            </ul>
+          </rt-header-nav-item-dropdown-list>
+        
+      </rt-header-nav-item-dropdown>
+    </rt-header-nav-item>
+
+    <rt-header-nav-item slot="shop">
+      <a class="unset"
+          id="appLink"
+          slot="link"
+          href="https://editorial.rottentomatoes.com/article/app/"
+          target="_blank"
+          data-qa="masthead:app-link"
+          data-AdsGlobalNavTakeoverManager="text"
+      >
+          RT App
+          <temporary-display
+            slot="temporary-display"
+            key="app"
+            element="#appLink"
+            event="click"
+          >
+            <rt-badge hidden>New</rt-badge>
+          </temporary-display>
+      </a>
+    </rt-header-nav-item>
+
+    <rt-header-nav-item slot="news" data-qa="masthead:news">
+      <a
+        class="unset"
+        slot="link"
+        href="https://editorial.rottentomatoes.com"
+        data-qa="masthead:news-link"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        News
+      </a>
+      <rt-header-nav-item-dropdown aria-expanded="false" slot="dropdown" data-qa="news-menu">
+        <rt-header-nav-item-dropdown-list slot="column" data-qa="header-news-columns">
+          <p slot="title" class="h4">Columns</p>
+          <ul slot="links">
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/all-time-lists/" data-pageheader="All-Time Lists" data-qa="column-link">
+                All-Time Lists
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/binge-guide/" data-pageheader="Binge Guide" data-qa="column-link">
+                Binge Guide
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/comics-on-tv/" data-pageheader="Comics on TV" data-qa="column-link">
+                Comics on TV
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/countdown/" data-pageheader="Countdown" data-qa="column-link">
+                Countdown
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/five-favorite-films/" data-pageheader="Five Favorite Films" data-qa="column-link">
+                Five Favorite Films
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/video-interviews/" data-pageheader="Video Interviews" data-qa="column-link">
+                Video Interviews
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/weekend-box-office/" data-pageheader="Weekend Box Office" data-qa="column-link"
+              >Weekend Box Office
+            </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/weekly-ketchup/" data-pageheader="Weekly Ketchup" data-qa="column-link">
+                Weekly Ketchup
+              </a>
+            </li>
+            <li data-qa="column-item">
+              <a href="https://editorial.rottentomatoes.com/what-to-watch/" data-pageheader="What to Watch" data-qa="column-link">
+                What to Watch
+              </a>
+            </li>
+          </ul>
+        </rt-header-nav-item-dropdown-list>
+
+        
+          <rt-header-nav-item-dropdown-list slot="column" data-qa="header-news-guides">
+            <p slot="title" class="h4">Guides</p>
+            <ul slot="links" class="news-wrap">
+              
+                <li data-qa="guides-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/guide/best-new-movies/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="Best New Movies of 2026, Ranked by Tomatometer poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2026/09/primetime-600x314-1.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>Best New Movies of 2026, Ranked by Tomatometer</p>
+            <span class="sr-only">Link to Best New Movies of 2026, Ranked by Tomatometer</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+                <li data-qa="guides-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/guide/best-new-tv-series-shows/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="Best TV Shows of 2026: New Series to Watch Now poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2026/09/slow-horses-s6-600x314-1.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>Best TV Shows of 2026: New Series to Watch Now</p>
+            <span class="sr-only">Link to Best TV Shows of 2026: New Series to Watch Now</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+            </ul>
+            <a
+              class="a--short"
+              data-qa="guides-view-all-link"
+              href="https://editorial.rottentomatoes.com/countdown/"
+              slot="view-all-link"
+            >
+              View All
+            </a>
+          </rt-header-nav-item-dropdown-list>
+        
+
+        
+          <rt-header-nav-item-dropdown-list slot="column" data-qa="header-news-hubs">
+            <p slot="title" class="h4">Hubs</p>
+            <ul slot="links" class="news-wrap">
+              
+                <li data-qa="hubs-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/rt-hub/awards-tour/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="Awards Tour poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2023/12/RT_AwardsTour_Thumbnail_600x314.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>Awards Tour</p>
+            <span class="sr-only">Link to Awards Tour</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+                <li data-qa="hubs-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/rt-hub/what-to-watch/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="What to Watch: In Theaters and On Streaming poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2023/05/RT_WTW_Generic_2023_Thumbnail_600x314_021623.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>What to Watch: In Theaters and On Streaming</p>
+            <span class="sr-only">Link to What to Watch: In Theaters and On Streaming</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+            </ul>
+            <a
+              class="a--short"
+              data-qa="hubs-view-all-link"
+              href="https://editorial.rottentomatoes.com/rt-hubs/"
+              slot="view-all-link"
+            >
+              View All
+            </a>
+          </rt-header-nav-item-dropdown-list>
+        
+
+        
+          <rt-header-nav-item-dropdown-list slot="column" data-qa="header-news-rt-news">
+            <p slot="title" class="h4">RT News</p>
+            <ul slot="links" class="news-wrap">
+              
+                <li data-qa="rt-news-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/article/audience-score-update/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="Introducing the Verified Hot Audience Badge poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2024/07/VerifiedHot.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>Introducing the Verified Hot Audience Badge</p>
+            <span class="sr-only">Link to Introducing the Verified Hot Audience Badge</span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+                <li data-qa="rt-news-item">
+                  <a class="news-tile" href="https://editorial.rottentomatoes.com/article/visionquest-set-visit-paul-bettany-interviews/" data-qa="news-link">
+    <tile-dynamic
+        data-qa="tile"
+        orientation="landscape"
+    >
+        <rt-img
+            alt="Coded Easter Eggs and AI Personalities on the Set of <em>VisionQuest</em> poster image"
+            slot="image"
+            src="https://editorial.rottentomatoes.com/wp-content/uploads/2026/09/VisionQuest_Preview-Rep2.jpg"
+            loading="lazy"
+        ></rt-img>
+        <div slot="caption">
+            <p>Coded Easter Eggs and AI Personalities on the Set of <em>VisionQuest</em></p>
+            <span class="sr-only">Link to Coded Easter Eggs and AI Personalities on the Set of <em>VisionQuest</em></span>
+        </div>
+    </tile-dynamic>
+</a>
+                </li>
+              
+            </ul>
+            <a
+              class="a--short"
+              data-qa="rt-news-view-all-link"
+              href="https://editorial.rottentomatoes.com/news/"
+              slot="view-all-link"
+            >
+              View All
+            </a>
+          </rt-header-nav-item-dropdown-list>
+        
+      </rt-header-nav-item-dropdown>
+    </rt-header-nav-item>
+
+    <rt-header-nav-item slot="showtimes">
+      <a
+        class="unset"
+        slot="link"
+        href="https://www.fandango.com/movies-in-theaters?a=13036"
+        target="_blank"
+        rel="noopener"
+        data-qa="masthead:tickets-showtimes-link"
+        data-AdsGlobalNavTakeoverManager="text"
+      >
+        Showtimes
+      </a>
+    </rt-header-nav-item>
+  </rt-header-nav>
+
+</rt-header>
+
+<ads-global-nav-takeover-manager></ads-global-nav-takeover-manager>
+<section class="trending-bar">
+  
+
+  
+    <ad-unit hidden id="trending_bar_ad" unit-display="desktop" unit-type="trendinggraphic">
+      <div slot="ad-inject"></div>
+    </ad-unit>
+  
+  <div id="trending_bar_ad_wrap" hidden data-AdsTrendingGraphicManager="renderAd"></div>
+  <div id="trending-bar-start" class="trending-list-wrap" data-qa="trending-bar">
+    <ul class="list-inline trending-bar__list" data-curation="rt-nav-trending"
+      data-qa="trending-bar-list">
+      <li class="trending-bar__header">Trending on RT</li>
+      
+      <li><a class="trending-bar__link" href="https://athome.fandango.com/content/browse/free"  data-qa="trending-bar-item" data-AdsTrendingGraphicManager="trendingLink"> Free Movies </a></li>
+      
+      <li><a class="trending-bar__link" href="https://editorial.rottentomatoes.com/article/essential-mexican-movies-that-are-worth-watching-2/"  data-qa="trending-bar-item" data-AdsTrendingGraphicManager="trendingLink"> Hispanic Heritage Month  </a></li>
+      
+      <li><a class="trending-bar__link" href="https://editorial.rottentomatoes.com/article/zach-cregger-seen-on-the-screen-interview/"  data-qa="trending-bar-item" data-AdsTrendingGraphicManager="trendingLink"> Seen on the Screen </a></li>
+      
+      <li><a class="trending-bar__link" href="https://editorial.rottentomatoes.com/article/app/"  data-qa="trending-bar-item" data-AdsTrendingGraphicManager="trendingLink"> Rotten Tomatoes App  </a></li>
+      
+    </ul>
+    <div class="trending-bar__social" data-qa="trending-bar-social-list" data-AdsTrendingGraphicManager="social">
+      <social-media-icons theme="light" size="14px"></social-media-icons>
+    </div>
+  </div>
+</section>
+
+
+            </header>
+            <main
+                id="main_container"
+                class="container rt-layout__content"
+            >
+                <div id="main-page-content">
+                    <toast-notification
+                        aria-live="polite"
+                        data-WatchlistButtonManager="notification"
+                        data-ChooseManager="notification"
+                        data-ProfilesCriticPageManager="notification"
+                        data-ProfilesPublicationPageManager="notification"
+                        data-ProfilesUserPageManager="notification"
+                        hidden
+                    >
+                        <rt-icon slot="icon" icon="error-filled" image size-pixel="16"></rt-icon>
+                        <rt-text slot="message" context="label" size="0.875"></rt-text>
+                        <rt-button slot="close" theme="transparent">
+                            <rt-icon icon="close" image size-pixel="16"></rt-icon>
+                        </rt-button>
+                    </toast-notification>
+
+                    
+
+  
+                    
+
+  <div class="search__container layout">
+    <section class="search__main layout__column layout__column--main">
+        
+            <h1 class="unset">
+                <rt-text context="heading" size="1.625">Search Results for : "resident evil"</rt-text>
+            </h1>
+
+            <search-page-manager search-query="resident evil"></search-page-manager>
+            <div id="search-results" data-qa="search-results">
+                <nav class="search__nav" slot="searchNav">
+                    <ul class="searchNav__filters">
+                        <li
+                            class="searchNav__filter searchNav__filter-all searchNav__filter--active"
+                            data-filter="all"
+                            data-SearchPageManager="filter:click,keypress"
+                            tabindex="0"
+                        ><span data-qa="search-filter-text">All</span></li>
+                        
+                            <li
+                                class="searchNav__filter"
+                                data-filter="movie"
+                                data-SearchPageManager="filter:click,keypress"
+                                tabindex="0"
+                            ><span data-qa="search-filter-text">Movies (23)</span></li>
+                        
+                        
+                            <li
+                                class="searchNav__filter"
+                                data-filter="tvSeries"
+                                data-SearchPageManager="filter:click,keypress"
+                                tabindex="0"
+                            ><span data-qa="search-filter-text">TV Shows (3)</span></li>
+                        
+                        
+                    </ul>
+                </nav>
+
+                
+                    <search-page-result
+                        data-qa="search-result"
+                        data-SearchPageManager="results:moreBtnClick,nextBtnClick,prevBtnClick"
+                        skeleton="panel"
+                        type="movie"
+                    >
+                        <h2 class="unset" slot="title" data-qa="search-result-title">
+                            <rt-text context="heading" size="1.25"> Movies </rt-text>
+                        </h2>
+                        <button slot="prev-btn" data-qa="paging-btn-prev">Prev</button>
+                        <button slot="next-btn" data-qa="paging-btn-next">Next</button>
+                        <ul slot="list">
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Austin Abrams,Zach Cherry,Kali Reis"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2026"
+                                    start-year=""
+                                    tomatometer-is-certified="true"
+                                    tomatometer-score="96"
+                                    tomatometer-sentiment="POSITIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_2026" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/AKSszG_Q0eZBExyVzOCu4jB2ZsQ=/fit-in/80x126/v2/https://resizing.flixster.com/BbrMw3gKnkAm02-ECbEW8n83Z1g=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzFlMDI1M2MyLTViMDgtNDRhYi1hNjJkLTEwMWIyYzU1MmVjZi5qcGc=">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_2026" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Michelle Rodriguez,Eric Mabius"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2002"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="36"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/2t5R1lkCHaW0eDtpHnrLM31QD8k=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p29625_p_v8_ag.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Kaya Scodelario,Hannah John-Kamen,Robbie Amell"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2021"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="30"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_welcome_to_raccoon_city" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Welcome to Raccoon City"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/dXFXYl06rEwQe44VI5aslFmdjwg=/fit-in/80x126/v2/https://resizing.flixster.com/Lxxoa5WBd02ReZL5enD7RlSPxNs=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzkwYWNiNmY4LWI3NjMtNGMzZS05ZTIyLTJmN2JiNDkyNzdhMC5qcGc=">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_welcome_to_raccoon_city" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Welcome to Raccoon City
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Iain Glen,Ali Larter"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2016"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="39"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_the_final_chapter" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: The Final Chapter"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/34zUWQEt4MRBEZ53R9qlUdv_4pQ=/fit-in/80x126/v2/https://resizing.flixster.com/UHppvqqmhKyr4ooVZHGE055Cbgg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2YxNTRiZmI0LWY0YzItNDBkNi04YmM1LWI3MDIzNjZhZTVjMS53ZWJw">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_the_final_chapter" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: The Final Chapter
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Matthew Mercer,Courtenay Taylor,Carolyn Lawrence"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2012"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="100"
+                                    tomatometer-sentiment="POSITIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_damnation" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Damnation"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/kHwwSlZ_B8Q7RHSJZ-xYwTGRemQ=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p9424887_p_v8_ag.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_damnation" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Damnation
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Sienna Guillory,Oded Fehr"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2004"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="18"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_apocalypse" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Apocalypse"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/uSDn1wweN7it8l_5D7ddGXz7eC0=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p34790_p_v8_aa.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_apocalypse" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Apocalypse
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Matthew Mercer,Stephanie Panisello,Kevin Dorman"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2023"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="71"
+                                    tomatometer-sentiment="POSITIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_death_island" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Death Island"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/DVmnXbTenhx67Kbd8zSCtdpJfzw=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p24790759_p_v13_aa.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_death_island" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Death Island
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Oded Fehr,Ali Larter"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2007"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="24"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_extinction" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Extinction"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/uG0OiCkISD8lyBJHgpBpORwWt6w=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p168193_p_v10_ac.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_extinction" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Extinction
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Michelle Rodriguez,Kevin Durand"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2012"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="28"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_retribution" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Retribution"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/lXD_of4K20Od4Mmzi8jdDxnvMD8=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p9128231_p_v8_ah.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_retribution" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Retribution
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast="Milla Jovovich,Ali Larter,Kim Coates"
+                                    data-qa="data-row"
+                                    end-year=""
+                                    release-year="2010"
+                                    start-year=""
+                                    tomatometer-is-certified="false"
+                                    tomatometer-score="21"
+                                    tomatometer-sentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_afterlife" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Afterlife"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/TSTS3cYMVoHgkurcvd-lO7nX78Y=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p8078013_p_v10_ac.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/m/resident_evil_afterlife" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Afterlife
+                                    </a>
+                                </search-page-media-row>
+                            
+                        </ul>
+                        <button slot="more-btn" data-qa="search-more-btn">More Movies...</button>
+                    </search-page-result>
+                
+
+                
+                    <search-page-result
+                        data-qa="search-result"
+                        data-SearchPageManager="results:moreBtnClick,nextBtnClick,prevBtnClick"
+                        skeleton="panel"
+                        type="tvSeries"
+                    >
+                        <h2 class="unset" slot="title" data-qa="search-result-title">
+                            <rt-text context="heading" size="1.25"> TV shows </rt-text>
+                        </h2>
+                        <button slot="prev-btn" data-qa="paging-btn-prev">Prev</button>
+                        <button slot="next-btn" data-qa="paging-btn-next">Next</button>
+                        <ul slot="list">
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast=""
+                                    data-qa="data-row"
+                                    endyear="2022"
+                                    releaseyear=""
+                                    startyear="2022"
+                                    tomatometeriscertified="false"
+                                    tomatometerscore="54"
+                                    tomatometersentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/tv/resident_evil" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/SKWuxczz70Ie18Q2bPwMklVVO7Q=/fit-in/80x126/v2/https://resizing.flixster.com/WBebJAAR5Zff2ZR3X88-6mF1WyE=/ems.cHJkLWVtcy1hc3NldHMvdHZzZXJpZXMvZjIwYTdiMmMtZGExOS00M2Q2LWExZGItNTM2NWU5ZGYwNDk1LmpwZw==">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/tv/resident_evil" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast=""
+                                    data-qa="data-row"
+                                    endyear=""
+                                    releaseyear=""
+                                    startyear="2021"
+                                    tomatometeriscertified="false"
+                                    tomatometerscore="55"
+                                    tomatometersentiment="NEGATIVE"
+                                >
+                                    <a href="https://www.rottentomatoes.com/tv/resident_evil_infinite_darkness" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Resident Evil: Infinite Darkness"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/H5sQxiusWHUQ45uo0iY2c5mBF_Q=/fit-in/80x126/v2/https://resizing.flixster.com/2rpMuttFZppPJ9oPQlLri__--RU=/ems.cHJkLWVtcy1hc3NldHMvdHZzZXJpZXMvUlRUVjk3MDQ4Ny53ZWJw">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/tv/resident_evil_infinite_darkness" class="unset" data-qa="info-name" slot="title">
+                                        Resident Evil: Infinite Darkness
+                                    </a>
+                                </search-page-media-row>
+                            
+                                <search-page-media-row
+                                    skeleton="panel"
+                                    cast=""
+                                    data-qa="data-row"
+                                    endyear=""
+                                    releaseyear=""
+                                    startyear="2018"
+                                    tomatometeriscertified="false"
+                                    tomatometerscore=""
+                                    tomatometersentiment=""
+                                >
+                                    <a href="https://www.rottentomatoes.com/tv/our_cartoon_president" class="unset" data-qa="thumbnail-link" slot="thumbnail">
+                                        <img
+                                            alt="Our Cartoon President"
+                                            loading="lazy"
+                                            src="https://resizing.flixster.com/0xxojoYm1nGO417Fv9eGodqlpcI=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15004121_b_v10_ah.jpg">
+                                    </a>
+                                    <a href="https://www.rottentomatoes.com/tv/our_cartoon_president" class="unset" data-qa="info-name" slot="title">
+                                        Our Cartoon President
+                                    </a>
+                                </search-page-media-row>
+                            
+                        </ul>
+                        <button slot="more-btn" data-qa="search-more-btn">More TV Shows...</button>
+                    </search-page-result>
+                
+
+                <ad-unit hidden unit-display="mobile" unit-type="interscroller" no-retry>
+                    <aside slot="ad-inject" class="center mobile-interscroller"></aside>
+                </ad-unit>
+
+                
+            </div>
+        
+    </section>
+
+    <section class="search__sidebar layout__column layout__column--sidebar">
+        <div class="adColumn__content">
+            <ad-unit hidden unit-display="desktop" unit-type="topmulti" show-ad-link>
+                <div slot="ad-inject"></div>
+            </ad-unit>
+        </div>
+    </section>
+
+  </div>
+
+
+                </div>
+
+                <back-to-top hidden></back-to-top>
+            </main>
+
+            <ad-unit hidden unit-display="desktop" unit-type="bottombanner">
+                <div slot="ad-inject" class="sleaderboard_wrapper"></div>
+            </ad-unit>
+
+            <ads-global-skin-takeover-manager></ads-global-skin-takeover-manager>
+            <ads-trending-graphic-manager></ads-trending-graphic-manager>
+
+            
+            <span class="cc-check" style="display: none;"></span>
+
+            <rt-footer data-qa="footer:section">
+    <script type="application/json" data-json="links">
+        {
+            "company": { "name": "Versant Media", "href": "https://versantmedia.com/" },
+            "desktopColumn1": [
+                { "textContent": "Help", "href": "/help_desk", "qa": "footer:link-helpdesk" },
+                { "textContent": "About Rotten Tomatoes", "href": "/about", "qa": "footer:link-about" }
+            ],
+            "desktopColumn2": [
+                { "textContent": "Critic Submission", "href": "/critics/criteria", "qa": "footer:link-critic-submission" },
+                { "textContent": "Licensing", "href": "/help_desk/licensing", "qa": "footer:link-licensing" },
+                { "textContent": "Advertise With Us", "href": "https://www.versantmedia.com/", "target": "_blank", "qa": "footer:link-ads" },
+                { "textContent": "Careers", "href": "//www.fandango.com/careers", "target": "_blank", "qa": "footer:link-careers" }
+            ],
+            "privacy": [
+                { "textContent": "Ad Choices", "href": "https://www.versantprivacy.com/privacy/cookies#accordionheader3", "target": "_blank", "qa": "footer:link-adChoices" },
+                { "textContent": "Privacy Policy", "href": "https://www.versantprivacy.com/privacy", "target": "_blank", "qa": "footer:link-privacy-policy" },
+                { "textContent": "CA Notice", "href": "https://www.versantprivacy.com/privacy/california-consumer-privacy-act", "target": "_blank", "qa": "footer:link-california-notice" },
+                { "textContent": "Terms and Policies", "href": "https://www.rottentomatoes.com/policies/terms-and-policies", "qa": "footer:link-terms-policies" },
+                { "textContent": "Accessibility", "href": "/faq#accessibility", "qa": "footer:link-accessibility" }
+            ]
+        }
+    </script>
+
+    
+        <mobile-app-desktop-footer slot="desktop-cta" env="production" hidden></mobile-app-desktop-footer>
+    
+
+    <div slot="mobile-cta" class="mobile-app-cta-wrap">
+        
+        <mobile-app-cta
+            env="production"
+            showandroid="true"
+            showios="true"
+            hidden
+        ></mobile-app-cta>
+    </div>
+
+    <span slot="newsletter-anon">
+        <rt-button shape="pill" data-qa="footer-newsletter-anon">
+            Join The Newsletter
+        </rt-button>
+    </span>
+    <span slot="newsletter-auth">
+        <rt-button shape="pill" href="/user/account/email-preferences" data-qa="footer-newsletter-auth">
+            Join The Newsletter
+        </rt-button>
+    </span>
+
+    <span slot="feedback-desktop" id="footer-feedback" data-qa="footer-feedback-desktop">
+        
+    </span>
+    <span slot="feedback-mobile" id="footer-feedback-mobile" data-qa="footer-feedback-mobile">
+        
+    </span>
+
+    <span slot="cookie-settings">
+        <!-- OneTrust Cookies Settings button start -->
+        <a href="javascript:void(0)" id="ot-sdk-btn" class="ot-sdk-show-settings" data-qa="footer-cookie-settings">Cookie Settings</a>
+        <!-- OneTrust Cookies Settings button end -->
+    </span>
+
+    <style slot="light-dom-css">
+        
+        rt-footer #footer-feedback a,
+        rt-footer #footer-feedback-mobile a,
+        rt-footer #ot-sdk-btn.ot-sdk-show-settings {
+            color: var(--white);
+            font-size: 0.875rem;
+            line-height: 1.375rem;
+            text-decoration: none;
+            border: initial;
+            height: initial;
+            white-space: initial;
+            padding: 0;
+            transition: initial;
+            background-color: initial;
+        }
+
+        @media (min-width: 768px) {
+            rt-footer #footer-feedback a,
+            rt-footer #ot-sdk-btn.ot-sdk-show-settings {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</rt-footer>
+
+        </div>
+
+        
+        <iframe-container
+            hidden
+            data-ArtiManager="iframeContainer:close,resize"
+            data-iframe-src="https://arti.rottentomatoes.com?theme=iframe"
+            theme="widget"
+        >
+            <span slot="logo"><img src="/assets/pizza-pie/images/arti.041d204c4a4.svg" alt="Logo"></img><span>beta</span></span>
+            <rt-button
+                proxy-aria-label="New chat"
+                data-ArtiManager="btnNewChat:click"
+                id="artiNewChatButton"
+                slot="opt-btns"
+                theme="transparent"
+                title="New chat"
+            >
+                <rt-icon icon="new-chat" size-pixel="20" image></rt-icon>
+            </rt-button>
+        </iframe-container>
+        <arti-manager data-SearchResultsNavManager="artiManager"></arti-manager>
+        
+
+        
+    
+        <script type="text/javascript">
+      (function (root) {
+        /* -- Data -- */
+        root.Fandango || (root.Fandango = {});
+root.Fandango.dtmData = {"webVersion":"node","rtVersion":3.1,"loggedInStatus":"","customerId":"","pageName":"trailers"};
+root.RottenTomatoes || (root.RottenTomatoes = {});
+root.RottenTomatoes.context || (root.RottenTomatoes.context = {});
+root.RottenTomatoes.context.video = {"file":"https:\u002F\u002Flink.theplatform.com\u002Fs\u002FNGweTC\u002Fmedia\u002F5Pnb_C7y7i0Z?formats=MPEG-DASH+widevine,M3U+appleHlsEncryption,M3U+none,MPEG-DASH+none,MPEG4,MP3","type":"hls","description":"","image":"https:\u002F\u002Fstatcdn.fandango.com\u002FMPX\u002Fimage\u002FNBCU_Fandango\u002F212\u002F743\u002Fthumb_F5A85E2A-EDF5-438A-825C-38956DB16AF2.jpg","isRedBand":false,"mediaid":"2426878531719","mpxId":"2426878531719","publicId":"5Pnb_C7y7i0Z","title":"Tape: Trailer 1","default":false,"label":"0","duration":"1:20","durationInSeconds":"80.414","emsMediaType":"Movie","emsId":"f629bd28-1a86-4e83-a705-f194c82627cc","overviewPageUrl":"\u002Fm\u002Ftape_2024","videoPageUrl":"\u002Fm\u002Ftape_2024\u002Fvideos\u002F5Pnb_C7y7i0Z","videoType":"TRAILER","adobeDataLayer":{"content":{"id":"fandango_2426878531719","length":"80.414","type":"vod","player_name":"jw","sdk_version":"web: 6.51.0","channel":"movie","originator":"","name":"tape: trailer 1","rating":"not adult","stream_type":"video"},"media_params":{"genre":"drama, mystery & thriller","show_type":1}},"comscore":{"labelmapping":"c3=\"rottentomatoes.com\", ns_st_st=\"Rotten Tomatoes\", ns_st_pu=\"\", ns_st_pr=\"Tape\", ns_st_sn=\"*null\", ns_st_en=\"*null\", ns_st_ge=\"Drama,Mystery & Thriller\", ns_st_ia=\"0\", ns_st_ce=\"0\", ns_st_ddt=\"2024\", ns_st_tdt=\"2024\""},"thumbnail":"https:\u002F\u002Fresizing.flixster.com\u002FaSCukzTOjY7wQkuw6y9DUWlUqjM=\u002F270x160\u002Fv2\u002Fhttps:\u002F\u002Fstatcdn.fandango.com\u002FMPX\u002Fimage\u002FNBCU_Fandango\u002F212\u002F743\u002Fthumb_F5A85E2A-EDF5-438A-825C-38956DB16AF2.jpg"};
+root.RottenTomatoes.context.videoClipsJson = {"count":1};
+root.RottenTomatoes.context.verifiedTooltip = undefined;
+root.RottenTomatoes.context.review = {"mediaType":"tvEpisode","hideTabLink":undefined,"title":"Hazel: Season 5, Episode 12","emsId":"60f55999-dd26-363f-b613-d6956872e854","type":"all","sort":undefined,"reviewsCount":0,"pageInfo":undefined,"reviewerDefaultImg":"https:\u002F\u002Fimages.fandango.com\u002Fcms\u002Fassets\u002F5b6ff500-1663-11ec-ae31-05a670d2d590--rtactordefault.png","reviewerDefaultImgWidth":"100"};
+root.RottenTomatoes.context.useCursorPagination = true;
+root.RottenTomatoes.context.layout = {"header":{"movies":{"moviesAtHome":{"tarsSlug":"rt-nav-movies-at-home","linkList":[{"header":"Fandango","slug":"fandango-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Faffiliates:fandango"},{"header":"Netflix","slug":"netflix-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Faffiliates:netflix"},{"header":"Apple TV","slug":"apple-tv-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Faffiliates:apple-tv-plus"},{"header":"Prime Video","slug":"prime-video-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Faffiliates:prime-video"},{"header":"Most Popular Streaming movies","slug":"most-popular-streaming-movies-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Fsort:popular"},{"header":"Certified Fresh movies","slug":"certified-fresh-movies-link","url":"\u002Fbrowse\u002Fmovies_at_home\u002Fcritics:certified_fresh"},{"header":"Browse all","slug":"browse-all-link","url":"\u002Fbrowse\u002Fmovies_at_home"}]}},"editorial":{"guides":{"posts":[{"ID":280723,"author":7,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2026\u002F09\u002Fprimetime-600x314-1.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fguide\u002Fbest-new-movies\u002F","status":"publish","title":"Best New Movies of 2026, Ranked by Tomatometer","type":"guide"},{"ID":281007,"author":12,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2026\u002F09\u002Fslow-horses-s6-600x314-1.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fguide\u002Fbest-new-tv-series-shows\u002F","status":"publish","title":"Best TV Shows of 2026: New Series to Watch Now","type":"guide"}],"title":"Guides","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fcountdown\u002F"},"hubs":{"posts":[{"ID":140214,"author":12,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2023\u002F12\u002FRT_AwardsTour_Thumbnail_600x314.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Frt-hub\u002Fawards-tour\u002F","status":"publish","title":"Awards Tour","type":"rt-hub"},{"ID":237626,"author":12,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2023\u002F05\u002FRT_WTW_Generic_2023_Thumbnail_600x314_021623.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Frt-hub\u002Fwhat-to-watch\u002F","status":"publish","title":"What to Watch: In Theaters and On Streaming","type":"rt-hub"}],"title":"Hubs","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Frt-hubs\u002F"},"news":{"posts":[{"ID":252509,"author":7,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2024\u002F07\u002FVerifiedHot.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Farticle\u002Faudience-score-update\u002F","status":"publish","title":"Introducing the Verified Hot Audience Badge","type":"article"},{"ID":297610,"author":800,"featured_image":{"source":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fwp-content\u002Fuploads\u002F2026\u002F09\u002FVisionQuest_Preview-Rep2.jpg"},"link":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Farticle\u002Fvisionquest-set-visit-paul-bettany-interviews\u002F","status":"publish","title":"Coded Easter Eggs and AI Personalities on the Set of \u003Cem\u003EVisionQuest\u003C\u002Fem\u003E","type":"article"}],"title":"RT News","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Fnews\u002F"}},"trendingTarsSlug":"rt-nav-trending","trending":[{"header":"Free Movies","url":"https:\u002F\u002Fathome.fandango.com\u002Fcontent\u002Fbrowse\u002Ffree"},{"header":"Hispanic Heritage Month ","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Farticle\u002Fessential-mexican-movies-that-are-worth-watching-2\u002F"},{"header":"Seen on the Screen","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Farticle\u002Fzach-cregger-seen-on-the-screen-interview\u002F"},{"header":"Rotten Tomatoes App ","url":"https:\u002F\u002Feditorial.rottentomatoes.com\u002Farticle\u002Fapp\u002F"}],"certifiedMedia":{"certifiedFreshTvSeason":{"header":null,"media":{"url":"\u002Ftv\u002Fmobland\u002Fs02","name":"MobLand: Season 2","score":90,"posterImg":"https:\u002F\u002Fresizing.flixster.com\u002F7-9HCza7z0bTw7qwa1IwTbT3bUM=\u002F130x187\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002FjpAOVzmp3B1k0ua4MPluVGC94Ok=\u002Ffit-in\u002F180x240\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002F2EfeoWjrUaaGpfWzRZmO7L31LIs=\u002Fems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vYjU0YTkzN2ItN2JmMC00NzA1LTg1M2ItYmRhN2VmZWVlNjFkLmpwZw=="},"tarsSlug":"rt-nav-list-cf-picks"},"certifiedFreshMovieInTheater":{"header":null,"media":{"url":"\u002Fm\u002Fprimetime","name":"Primetime","score":89,"posterImg":"https:\u002F\u002Fresizing.flixster.com\u002FA08UVUc8y5jCAtc0R4nzukazQ4o=\u002F130x187\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002F4LwHTZoxzkFKhQbST3KFF2Hm6Ps=\u002Ffit-in\u002F180x240\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002FnkAjyNfvQ0czMcFMa0Gsjl5bI28=\u002Fems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzM5YWIzYTg3LWIxYmYtNDM1ZC1iZjg3LWQ1YWIwZTFmNjYwOS5qcGc="}},"certifiedFreshMovieInTheater4":{"header":null,"media":{"url":"\u002Fm\u002Fha_chan_shake_your_booty","name":"Ha-Chan, Shake Your Booty!","score":90,"posterImg":"https:\u002F\u002Fresizing.flixster.com\u002FL_MgC6UQ3KVjogEy1eA_5BZoBbA=\u002F130x187\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002F9pssRHWY40vZU4sug5mxLpFeVTU=\u002Ffit-in\u002F180x240\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002F2VJzSmTwyHg9QbVaug_1dxKoiPE=\u002Fems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzQyNmMyNWUxLWVjNDUtNDM5YS04MjVkLTExYmEyZjVhMTg0Ni5qcGc="}},"certifiedFreshMovieAtHome":{"header":null,"media":{"url":"\u002Fm\u002Fthe_incomer","name":"The Incomer","score":94,"posterImg":"https:\u002F\u002Fresizing.flixster.com\u002FCREFlNu24u1Mu_uwcv0G7j_z__w=\u002F130x187\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002FN2PQ20v1Ce1HebMCuPlIH_dkhPU=\u002Ffit-in\u002F180x240\u002Fv2\u002Fhttps:\u002F\u002Fresizing.flixster.com\u002FqtZvRQ7jPu_BaOnYRVFER7i3ldo=\u002Fems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzU4ZDg1MjA1LTVmN2YtNGIzMy04MzE3LWU2Mzk1YjY5NjZjMy5qcGc="}},"tarsSlug":"rt-nav-list-cf-picks"},"tvLists":{"newTvTonight":{"tarsSlug":"rt-hp-text-list-3","title":"New TV Tonight","shows":[{"title":"Brothers: Season 1","tomatometer":{"tomatometer":53,"sentiment":"negative","certified":false},"tvPageUrl":"\u002Ftv\u002Fbrothers_2026\u002Fs01"},{"title":"Youth: Season 1","tomatometer":{"tomatometer":95,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fyouth\u002Fs01"},{"title":"Trespasses: Season 1","tomatometer":{"tomatometer":89,"sentiment":"positive","certified":false},"tvPageUrl":"\u002Ftv\u002Ftrespasses\u002Fs01"},{"title":"American Hostage: Season 1","tomatometer":{"tomatometer":92,"sentiment":"positive","certified":false},"tvPageUrl":"\u002Ftv\u002Famerican_hostage_2026\u002Fs01"},{"title":"Line of Fire: Season 1","tomatometer":{"tomatometer":91,"sentiment":"positive","certified":false},"tvPageUrl":"\u002Ftv\u002Fline_of_fire_2026\u002Fs01"},{"title":"The Great British Bake Off: Season 17","tomatometer":{"tomatometer":100,"sentiment":"positive","certified":false},"tvPageUrl":"\u002Ftv\u002Fthe_great_british_bake_off\u002Fs17"},{"title":"American Horror Story: 13: Season 13","tomatometer":{"tomatometer":null,"sentiment":"empty","certified":false},"tvPageUrl":"\u002Ftv\u002Famerican_horror_story\u002Fs13"},{"title":"A Different World: Season 1","tomatometer":{"tomatometer":40,"sentiment":"negative","certified":false},"tvPageUrl":"\u002Ftv\u002Fa_different_world_2026\u002Fs01"}]},"mostPopularTvOnRt":{"tarsSlug":"rt-hp-text-list-2","title":"Most Popular TV on RT","shows":[{"title":"Lanterns: Season 1","tomatometer":{"tomatometer":92,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Flanterns\u002Fs01"},{"title":"Neagley: Season 1","tomatometer":{"tomatometer":94,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fneagley\u002Fs01"},{"title":"Monster: The Lizzie Borden Story: Season 4","tomatometer":{"tomatometer":38,"sentiment":"negative","certified":false},"tvPageUrl":"\u002Ftv\u002Fmonster_2022\u002Fs04"},{"title":"American Hostage: Season 1","tomatometer":{"tomatometer":92,"sentiment":"positive","certified":false},"tvPageUrl":"\u002Ftv\u002Famerican_hostage_2026\u002Fs01"},{"title":"Slow Horses: Season 6","tomatometer":{"tomatometer":100,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fslow_horses\u002Fs06"},{"title":"MobLand: Season 2","tomatometer":{"tomatometer":90,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fmobland\u002Fs02"},{"title":"The Gentlemen: Season 2","tomatometer":{"tomatometer":86,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fthe_gentlemen\u002Fs02"},{"title":"Widow's Bay: Season 1","tomatometer":{"tomatometer":98,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fwidows_bay\u002Fs01"},{"title":"Furious: Season 1","tomatometer":{"tomatometer":99,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Ffurious\u002Fs01"},{"title":"Youth: Season 1","tomatometer":{"tomatometer":95,"sentiment":"positive","certified":true},"tvPageUrl":"\u002Ftv\u002Fyouth\u002Fs01"}]}}}};
+root.BK = {"PageName":"http:\u002F\u002Fwww.rottentomatoes.com\u002Fsearch?search=resident%20evil","SiteID":37528,"SiteSection":""};
+root.RottenTomatoes.thirdParty = {"mpx":{"accountPid":"NGweTC","playerPid":"y__7B0iQTi4P","playerPidPDK6":"pdk6_y__7B0iQTi4P","accountId":"2474312077"},"algoliaSearch":{"aId":"79FRDP12PN","sId":"175588f6e5f8319b27702e4cc4013561"},"cognito":{"upId":"us-west-2_4L0ZX4b1U","clientId":"7pu48v8i2n25t4vhes0edck31c"}};
+root.RottenTomatoes.serviceWorker = {"isServiceWokerOn":true};
+root.__RT__ || (root.__RT__ = {});
+root.__RT__.featureFlags = {"adAdjustment2026Q3Enabled":false,"adsCarouselHP":false,"adsCarouselHPSlug":"rt-sponsored-carousel-list-disney-plus-throwbacks-campaign","adsCarouselOP":false,"adsCarouselOPSlug":"rt-sponsored-carousel-list-disney-plus-throwbacks-campaign","adsMockDLP":false,"adsPages":"none","adsSponsoredOverrideOP":true,"adsSponsoredOverrideOPSlugs":"rt-sponsored-override-op-starz","adsVideoSpotlightHP":false,"adsVideoSpotlightHPv2":false,"artiEnabled":true,"artiSearchNavEnabled":true,"authVerboseLogs":false,"bypassCriticValidationEnabled":false,"communityWatch2026Q3Enabled":true,"criticPublicationProfile2026Q1Enabled":true,"cyoa2026Q3Enabled":false,"editorialApiDisabled":false,"fandangoConsolidation2026Q2Enabled":true,"justWatch2026Q3Enabled":false,"legacyBridge":true,"logVerboseEnabled":false,"mobileAppAndroid":"https:\u002F\u002Fplay.google.com\u002Fstore\u002Fapps\u002Fdetails?id=com.rottentomatoes.android","mobileAppIos":"https:\u002F\u002Fapps.apple.com\u002Fus\u002Fapp\u002Frotten-tomatoes-movies-tv\u002Fid6673916573","mobileAppIosMeta":"app-id=6673916573","rtebProxyEnabled":false,"tomoji2026Q3Enabled":false,"trafficAndroidEnabled":true,"trafficSafariEnabled":true};
+root.RottenTomatoes.dtmData = {"webVersion":"node","rtVersion":3.1,"loggedInStatus":"","customerId":""};
+root.RottenTomatoes.context.adsMockDLP = false;
+root.RottenTomatoes.context.req = {"params":{},"query":{"search":"resident evil"},"route":{},"url":"\u002Fsearch?search=resident%20evil","secure":false,"buildVersion":undefined};
+root.RottenTomatoes.context.config = {};
+root.RottenTomatoes.context.gptSite = "search";
+
+      }(this));
+    </script>
+
+        <script fetchpriority="high" src="/assets/pizza-pie/javascripts/bundles/roma/preload.9363b7635d0.js"></script>
+
+        <script defer src="/assets/pizza-pie/javascripts/bundles/roma/vendors.a4cc402b78a.js"></script>
+
+        <script  src="/assets/pizza-pie/javascripts/bundles/roma/default.6a7839b6162.js"></script>
+
+        
+            <script
+                async
+                data-SearchResultsNavManager="script:load"
+                src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js">
+            </script>
+            <script defer src="/assets/pizza-pie/javascripts/templates/roma/searchNav.482648261fd.js"></script>
+            <script defer src="/assets/pizza-pie/javascripts/bundles/roma/searchNav.986f26beead.js"></script>
+        
+        
+
+    <script defer src="/assets/pizza-pie/javascripts/bundles/search.9aa3ef9b950.js"></script>
+
+
+        
+            
+            <script>
+                if (window.mps && typeof window.mps.writeFooter === 'function') {
+                    window.mps.writeFooter();
+                }
+            </script>
+            
+        
+
+        
+            
+            <script>
+                window._satellite && _satellite.pageBottom();
+            </script>
+            
+        
+
+        
+            
+            <script id="parsely-cfg" src="//cdn.parsely.com/keys/rottentomatoes.com/p.js" async="" defer=""></script>
+            
+        
+    </body>
+</html>

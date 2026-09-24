@@ -1,0 +1,6 @@
+# Manual matches, keyed by Fandango movie ID. These always win.
+# Unmatched movies are logged with their ID when you fetch.
+#
+# [241283]
+# imdb = "tt0000000"
+# rt = "https://www.rottentomatoes.com/m/example"
