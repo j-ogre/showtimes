@@ -30,7 +30,7 @@
              clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
 
-  header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 10px; }
+  header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 0; }
   @media (min-width: 600px) {
     header { position: sticky; top: 0; z-index: 1; }
   }
@@ -98,6 +98,25 @@
   .chip.soldout { text-decoration: line-through; opacity: .6; }
   .chip.past { opacity: .4; }
 
+  [hidden] { display: none !important; }
+  .tabs { display: flex; gap: 4px; margin-top: 6px; }
+  .tabs button { border: 0; border-radius: 0; background: transparent; color: var(--muted);
+                 font-weight: 600; padding: 0 12px; min-height: 40px; cursor: pointer;
+                 box-shadow: inset 0 -2px 0 transparent; }
+  .tabs button:first-child { padding-left: 0; }
+  .tabs button[aria-selected=true] { color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+  .hour { font-size: 13px; font-weight: 600; color: var(--muted); margin: 16px 0 6px; }
+  .hour:first-of-type { margin-top: 4px; }
+  .slot { display: grid; grid-template-columns: 84px 36px 1fr; gap: 10px; align-items: start;
+          background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 8px 10px; margin-bottom: 6px; }
+  .slot .chip { justify-content: center; }
+  .slot img, .slot .noposter { width: 36px; height: 54px; object-fit: cover; border-radius: 4px;
+                               background: var(--line); }
+  .slot .title { font-weight: 600; line-height: 1.25; }
+  .slot .where { font-size: 13px; color: var(--muted); }
+  .slot .scores { margin: 2px 0 0; font-size: 14px; }
+
   footer.wrap { text-align: center; font-size: 12px; padding-bottom: 24px; }
   footer a { color: var(--muted); }
   footer a[aria-disabled=true] { pointer-events: none; opacity: .6; }
@@ -120,15 +139,20 @@
       </div>
     </form>
     <div id="status" role="status" aria-live="polite"></div>
+    <div class="tabs" role="tablist" aria-label="View">
+      <button type="button" role="tab" id="tab-movies" data-view="movies" aria-selected="true" aria-controls="out">All movies</button>
+      <button type="button" role="tab" id="tab-soon" data-view="soon" aria-selected="false" aria-controls="out" tabindex="-1">Playing soon</button>
+    </div>
   </div>
 </header>
-<main id="out" class="wrap" aria-busy="false"></main>
+<main id="out" class="wrap" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
 <footer class="wrap"><a href="#" id="refresh">Manually update caches</a></footer>
 <script>
 const TZ = __TIMEZONE__;
 const FAR_DAYS = 7;
 let data = null;
 let sortKey = "title";
+let view = "movies";
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -309,19 +333,78 @@ function render() {
     out.push(el("div", { class: "banner" }, "Dates more than a week out are often only partly published."));
   }
   if (data.no_showtimes) out.push(el("p", { class: "empty" }, "No showtimes published for this date."));
-  for (const m of [...data.movies].sort(compare)) {
-    const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), more(m));
-    const top = el("div", { class: "top" },
-      m.poster ? el("img", { class: "poster", src: m.poster, alt: "", loading: "lazy" }) : "", info);
-    const card = el("article", { class: "card" }, top);
-    for (const t of m.theaters) card.append(theaterBlock(t, isToday, now));
-    out.push(card);
+  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  let count = plural(data.movies.length, "movie");
+  if (view === "soon") {
+    const slots = upcoming(isToday, now);
+    count += ` · ${plural(slots.length, "showtime")}${isToday ? " left" : ""}`;
+    if (!slots.length && !data.no_showtimes) out.push(el("p", { class: "empty" }, "No more showtimes for this date."));
+    out.push(...soonList(slots));
+  } else {
+    for (const m of [...data.movies].sort(compare)) out.push(movieCard(m, isToday, now));
   }
   document.getElementById("out").replaceChildren(...out);
   const fetched = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
-  const count = `${data.movies.length} movie${data.movies.length === 1 ? "" : "s"}`;
   document.getElementById("status").textContent =
     `${formatDay(data.date, { weekday: "short", month: "short", day: "numeric" })} · ${count} · fetched ${fetched}`;
+}
+
+function movieCard(m, isToday, now) {
+  const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), more(m));
+  const top = el("div", { class: "top" },
+    m.poster ? el("img", { class: "poster", src: m.poster, alt: "", loading: "lazy" }) : "", info);
+  const card = el("article", { class: "card" }, top);
+  for (const t of m.theaters) card.append(theaterBlock(t, isToday, now));
+  return card;
+}
+
+// Every showtime that hasn't started, across all movies and theaters, earliest first.
+function upcoming(isToday, now) {
+  const slots = [];
+  for (const m of data.movies) {
+    for (const t of m.theaters) {
+      for (const s of t.showtimes) {
+        if (s.status === "pastshowtime" || (isToday && s.at < now)) continue;
+        slots.push({ m, t, s });
+      }
+    }
+  }
+  return slots.sort((a, b) => a.s.at.localeCompare(b.s.at)
+    || a.m.title.localeCompare(b.m.title, undefined, { sensitivity: "base" })
+    || a.t.name.localeCompare(b.t.name, undefined, { sensitivity: "base" }));
+}
+
+// Slots under an hour heading such as "3 PM"; shows after midnight are marked as the next day.
+function soonList(slots) {
+  const out = [];
+  let lastHour = null;
+  for (const { m, t, s } of slots) {
+    const hour = s.at.slice(0, 13);
+    if (hour !== lastHour) {
+      lastHour = hour;
+      const h = +s.at.slice(11, 13);
+      const label = `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}${s.at.slice(0, 10) !== data.date ? " (next day)" : ""}`;
+      out.push(el("h2", { class: "hour" }, label));
+    }
+    const where = [t.name, ...s.tags].join(" · ");
+    const info = el("div", {}, el("div", { class: "title" }, displayTitle(m)),
+      el("div", { class: "where" }, where), scores(m));
+    out.push(el("article", { class: "slot" }, chip(s, false, ""),
+      m.poster ? el("img", { src: m.poster, alt: "", loading: "lazy" }) : el("div", { class: "noposter" }), info));
+  }
+  return out;
+}
+
+function selectView(name) {
+  view = name;
+  for (const tab of document.querySelectorAll(".tabs [role=tab]")) {
+    const on = tab.dataset.view === name;
+    tab.setAttribute("aria-selected", on);
+    tab.tabIndex = on ? 0 : -1;
+    if (on) document.getElementById("out").setAttribute("aria-labelledby", tab.id);
+  }
+  document.querySelector(".sort").hidden = name !== "movies";
+  render();
 }
 
 document.getElementById("day").value = wallClock().day;
@@ -338,6 +421,16 @@ for (const b of document.querySelectorAll(".sort button")) {
     sortKey = b.dataset.sort;
     for (const o of document.querySelectorAll(".sort button")) o.setAttribute("aria-pressed", o === b);
     render();
+  });
+}
+const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
+for (const tab of tabs) {
+  tab.addEventListener("click", () => selectView(tab.dataset.view));
+  tab.addEventListener("keydown", e => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    const next = tabs[(tabs.indexOf(tab) + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+    next.focus();
+    selectView(next.dataset.view);
   });
 }
 fetchDay();
