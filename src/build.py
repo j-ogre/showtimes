@@ -28,13 +28,14 @@ class Config:
     timezone: ZoneInfo
     theaters: tuple[fandango.Theater, ...]
     amc: dict[str, str]
+    names: dict[str, str]
 
 
 def load_config(path: Path) -> Config:
     """Return the Config in `path`.
 
-    Raises ValueError on a missing or invalid timezone, theater URL or AMC
-    entry.
+    Raises ValueError on a missing or invalid timezone, theater URL, AMC
+    entry or theater name.
     """
     with path.open("rb") as f:
         data = tomllib.load(f)
@@ -52,7 +53,14 @@ def load_config(path: Path) -> Config:
         if tid not in ids:
             raise ValueError(f"{path}: [amc] {tid} is not a theater ID in theaters")
         pages[tid] = amc.theater_page(page)
-    return Config(tz, theaters, pages)
+    names = {}
+    for tid, name in (data.get("names") or {}).items():
+        if tid not in ids:
+            raise ValueError(f"{path}: [names] {tid} is not a theater ID in theaters")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError(f"{path}: [names] {tid} must be a non-empty string")
+        names[tid] = name.strip()
+    return Config(tz, theaters, pages, names)
 
 
 def build(day: date, config: Config, resolver: Resolver, ratings_path: Path,
@@ -102,7 +110,7 @@ def build(day: date, config: Config, resolver: Resolver, ratings_path: Path,
             for field in ("release_date", "runtime", "genres", "poster"):
                 if not movie.get(field):
                     movie[field] = m[field]
-            movie["theaters"].append({"name": name or theater.slug,
+            movie["theaters"].append({"name": config.names.get(theater.id) or name or theater.slug,
                                       "showtimes": m["showtimes"]})
 
     movies = sorted(merged.values(), key=lambda m: m["title"].casefold())

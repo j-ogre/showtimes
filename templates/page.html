@@ -11,14 +11,14 @@
     --bg: #f6f6f4; --card: #fff; --text: #1b1b1b; --muted: #636363;
     --line: #e2e2de; --chip: #eef2f7; --chip-text: #17365d;
     --accent: #2458a6; --on-accent: #fff; --accent-soft: #e3ecf9;
-    --warn-bg: #fff4d6; --warn-text: #6a4b00; --focus: #2458a6;
+    --warn-bg: #fff4d6; --warn-text: #6a4b00; --focus: #2458a6; --rail: #ededea;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #121212; --card: #1d1d1f; --text: #ececec; --muted: #a0a0a0;
       --line: #2e2e31; --chip: #243044; --chip-text: #d6e5ff;
       --accent: #7fb0ff; --on-accent: #0b1a33; --accent-soft: #22324b;
-      --warn-bg: #3a3014; --warn-text: #f3d98b; --focus: #9cc2ff;
+      --warn-bg: #3a3014; --warn-text: #f3d98b; --focus: #9cc2ff; --rail: #19191b;
     }
   }
   * { box-sizing: border-box; }
@@ -29,19 +29,32 @@
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
              clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
-  .filters { font-size: 14px; margin-top: 12px; }
-  .filters fieldset { border: 0; padding: 0; margin: 8px 0 12px; min-width: 0; }
-  .filters legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
-  .filters label { display: flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; }
-  .filters .range { justify-content: space-between; cursor: default; }
-  .filters output { font-variant-numeric: tabular-nums; color: var(--muted); }
-  .filters input { accent-color: var(--accent); margin: 0; }
-  .filters input[type=checkbox] { width: 18px; height: 18px; flex: none; }
-  .filters input[type=range] { width: 100%; min-height: 28px; }
+  .rail { font-size: 13px; background: var(--rail); border-right: 1px solid var(--line);
+          padding: 12px 16px; overflow-y: auto; }
+  .rail-head { display: flex; align-items: center; justify-content: space-between;
+               min-height: 40px; margin-bottom: 8px; }
+  .rail h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
+  .rail fieldset { border: 0; padding: 0; margin: 0 0 16px; min-width: 0; }
+  .rail legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
+  .rail label { display: flex; align-items: center; gap: 8px; min-height: 30px; cursor: pointer; }
+  .rail .range { justify-content: space-between; min-height: 24px; cursor: default; }
+  .rail output { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .rail input { accent-color: var(--accent); margin: 0; }
+  .rail input[type=checkbox] { width: 16px; height: 16px; flex: none; }
+  .rail input[type=range] { width: 100%; min-height: 24px; margin-bottom: 6px; }
+  .rail .note { color: var(--muted); margin: 0 0 4px; }
+  .rail fieldset:disabled label, .rail fieldset:disabled input { opacity: .5; cursor: default; }
+  #filters-open { padding: 6px 14px; cursor: pointer; }
+  #filters-done { min-height: 32px; padding: 0 12px; cursor: pointer; }
   @media (min-width: 900px) {
-    .wrap { max-width: 1000px; }
-    .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: start; }
-    .filters summary { display: none; }
+    .rail { position: fixed; inset: 0 auto 0 0; width: 200px; }
+    .page { margin-left: 200px; }
+    #filters-open, #filters-done { display: none; }
+  }
+  @media (max-width: 899.98px) {
+    .rail { display: none; }
+    .rail.open { display: block; position: fixed; inset: 0 auto 0 0; width: min(300px, 85vw); z-index: 10;
+                 box-shadow: 0 0 0 100vmax rgb(0 0 0 / .45); }
   }
 
   header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 0; }
@@ -64,7 +77,7 @@
   .sort button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
   #status { color: var(--muted); font-size: 13px; margin-top: 8px; min-height: 1.45em; }
 
-  main { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
+  main.wrap { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
   main[aria-busy=true] { opacity: .5; }
   @media (prefers-reduced-motion: reduce) { main { transition: none; } }
   .banner { background: var(--warn-bg); color: var(--warn-text); border-radius: 8px;
@@ -137,6 +150,19 @@
 </style>
 </head>
 <body>
+<aside class="rail" id="filters" aria-label="Filters" tabindex="-1">
+  <div class="rail-head"><h2>Filters</h2><button type="button" id="filters-done">Done</button></div>
+  <fieldset id="theaters"><legend>Theaters</legend></fieldset>
+  <fieldset id="score-filter" disabled>
+    <legend>Minimum scores</legend>
+    <p class="note" id="score-note">Playing soon only</p>
+    <label class="range" for="min-imdb">IMDb <output id="min-imdb-out" for="min-imdb">Any</output></label>
+    <input type="range" id="min-imdb" min="0" max="10" step="0.5" value="0">
+    <label class="range" for="min-rt">RT critics <output id="min-rt-out" for="min-rt">Any</output></label>
+    <input type="range" id="min-rt" min="0" max="100" step="5" value="0">
+  </fieldset>
+</aside>
+<div class="page">
 <header>
   <div class="wrap">
     <h1 class="sr-only">Showtimes</h1>
@@ -144,6 +170,7 @@
       <div class="pick">
         <input type="date" id="day" aria-label="Date" required>
         <button type="submit" id="fetch">Fetch</button>
+        <button type="button" id="filters-open" aria-controls="filters" aria-expanded="false">Filters</button>
       </div>
       <div class="sort" role="group" aria-label="Sort by">
         <button type="button" data-sort="title" aria-pressed="true">Title</button>
@@ -159,21 +186,9 @@
     </div>
   </div>
 </header>
-<div class="wrap layout">
-  <details class="filters" id="filters">
-    <summary>Filters</summary>
-    <fieldset id="theaters"><legend>Theaters</legend></fieldset>
-    <fieldset id="score-filter" hidden>
-      <legend>Minimum scores</legend>
-      <label class="range" for="min-imdb">IMDb <output id="min-imdb-out" for="min-imdb">Any</output></label>
-      <input type="range" id="min-imdb" min="0" max="10" step="0.5" value="0">
-      <label class="range" for="min-rt">RT critics <output id="min-rt-out" for="min-rt">Any</output></label>
-      <input type="range" id="min-rt" min="0" max="100" step="5" value="0">
-    </fieldset>
-  </details>
-  <main id="out" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
-</div>
+<main id="out" class="wrap" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
 <footer class="wrap"><a href="#" id="refresh">Manually update caches</a></footer>
+</div>
 <script>
 const TZ = __TIMEZONE__;
 const FAR_DAYS = 7;
@@ -411,6 +426,9 @@ function render() {
     for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now));
   }
   document.getElementById("out").replaceChildren(...out);
+  const active = hiddenTheaters.size + (view === "soon"
+    ? ["min-imdb", "min-rt"].filter(id => +document.getElementById(id).value).length : 0);
+  document.getElementById("filters-open").textContent = active ? `Filters · ${active}` : "Filters";
   const fetched = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
   document.getElementById("status").textContent =
     `${formatDay(data.date, { weekday: "short", month: "short", day: "numeric" })} · ${count} · fetched ${fetched}`;
@@ -471,7 +489,8 @@ function selectView(name) {
     if (on) document.getElementById("out").setAttribute("aria-labelledby", tab.id);
   }
   document.querySelector(".sort").hidden = name !== "movies";
-  document.getElementById("score-filter").hidden = name !== "soon";
+  document.getElementById("score-filter").disabled = name !== "soon";
+  document.getElementById("score-note").hidden = name === "soon";
   render();
 }
 
@@ -500,11 +519,19 @@ for (const [id, format] of [["min-imdb", v => v.toFixed(1)], ["min-rt", v => `${
     render();
   });
 }
-// The filter panel collapses only on narrow screens.
-const wide = matchMedia("(min-width: 900px)");
-const openFilters = () => { if (wide.matches) document.getElementById("filters").open = true; };
-wide.addEventListener("change", openFilters);
-openFilters();
+// Below 900px the filter rail is an overlay opened from the header.
+const rail = document.getElementById("filters");
+const openFilters = document.getElementById("filters-open");
+function showFilters(open) {
+  rail.classList.toggle("open", open);
+  openFilters.setAttribute("aria-expanded", open);
+  (open ? rail : openFilters).focus();
+}
+openFilters.addEventListener("click", () => showFilters(true));
+document.getElementById("filters-done").addEventListener("click", () => showFilters(false));
+rail.addEventListener("keydown", e => {
+  if (e.key === "Escape" && rail.classList.contains("open")) showFilters(false);
+});
 const tabs = [...document.querySelectorAll(".tabs [role=tab]")];
 for (const tab of tabs) {
   tab.addEventListener("click", () => selectView(tab.dataset.view));

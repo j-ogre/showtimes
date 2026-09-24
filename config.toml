@@ -8,6 +8,13 @@ theaters = [
   "https://www.fandango.com/universal-cinema-an-amc-theatre-aaawx/theater-page",
 ]
 
+# Short display names, by Fandango theater ID. Theaters not listed use Fandango's name.
+[names]
+aaqzz = "Burbank 16"
+aabsu = "Town Center 6"
+aaapc = "Town Center 8"
+aaawx = "CityWalk"
+
 # AMC theater pages, by Fandango theater ID. Showtimes at these theaters link to
 # AMC's page for the date. Theaters not listed link to Fandango.
 [amc]
