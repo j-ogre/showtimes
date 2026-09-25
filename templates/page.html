@@ -163,6 +163,8 @@
   .theater { break-inside: avoid; padding-bottom: var(--s1); }
   .theaters.single .theater { break-inside: auto; }
   .theater h3 { font-size: var(--t-sm); font-weight: 700; margin-bottom: var(--s2); }
+  .recliner { width: var(--t-sm); height: var(--t-sm); margin-left: var(--s1); vertical-align: -2px;
+              color: var(--text-2); }
   .group { break-inside: avoid; padding-bottom: var(--s3); }
   .format { font-size: var(--t-xs); color: var(--text-2); margin-bottom: var(--s1); }
   .times { display: flex; flex-wrap: wrap; gap: var(--s2); }
@@ -444,28 +446,60 @@ function timeButton(s, isToday, now) {
     : el("a", { class: cls, href: s.ticket_url, target: "_blank", rel: "noopener" }, ...parts);
 }
 
-// A theater's showtimes grouped by format, Standard first, each group in time order.
-function theaterBlock(t, isToday, now) {
-  const groups = new Map([["Standard", []]]);
-  for (const s of [...t.showtimes].sort((a, b) => a.at.localeCompare(b.at))) {
-    const key = s.tags.length ? s.tags.join(" · ") : "Standard";
-    if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(s);
+// A reclined-chair icon marking recliner seats.
+function reclinerIcon() {
+  const svg = document.createElementNS(SVG, "svg");
+  for (const [k, v] of Object.entries({ viewBox: "0 0 24 24", class: "recliner", role: "img", "aria-label": "recliners",
+                                        fill: "none", stroke: "currentColor", "stroke-width": "2.2",
+                                        "stroke-linecap": "round", "stroke-linejoin": "round" })) {
+    svg.setAttribute(k, v);
   }
-  const list = el("div", { class: "groups" });
-  for (const [format, shows] of groups) {
-    if (!shows.length) continue;
-    list.append(el("div", { class: "group" }, el("p", { class: "format" }, format),
-      el("div", { class: "times" }, ...shows.map(s => timeButton(s, isToday, now)))));
-  }
-  return el("section", { class: "theater" }, el("h3", {}, t.name), list);
+  const title = document.createElementNS(SVG, "title");
+  title.textContent = "Recliner seats";
+  const path = document.createElementNS(SVG, "path");
+  // Reclined back, seat, raised footrest, then the base.
+  path.setAttribute("d", "M4 4l3 9h9l4 4M11 13v6M7 19h8");
+  svg.append(title, path);
+  return svg;
 }
 
-function movieCard(m, isToday, now) {
+// Names of theaters where every showtime in `data` has recliners.
+function reclinerTheaters() {
+  const all = new Map();
+  for (const m of data.movies) {
+    for (const t of m.theaters) {
+      for (const s of t.showtimes) all.set(t.name, (all.get(t.name) ?? true) && !!s.recliner);
+    }
+  }
+  return new Set([...all].filter(([, yes]) => yes).map(([name]) => name));
+}
+
+// A theater's showtimes grouped by format, Standard first, each group in time order. Recliners are
+// marked on the heading when `allRecliners`, otherwise on each group that has them.
+function theaterBlock(t, isToday, now, allRecliners) {
+  const groups = new Map();
+  for (const s of [...t.showtimes].sort((a, b) => a.at.localeCompare(b.at))) {
+    const format = s.tags.length ? s.tags.join(" · ") : "Standard";
+    const recliner = !!s.recliner && !allRecliners;
+    const key = `${format}|${recliner}`;
+    if (!groups.has(key)) groups.set(key, { format, recliner, shows: [] });
+    groups.get(key).shows.push(s);
+  }
+  const standardFirst = [...groups.values()].sort((a, b) => (b.format === "Standard") - (a.format === "Standard"));
+  const list = el("div", { class: "groups" });
+  for (const { format, recliner, shows } of standardFirst) {
+    list.append(el("div", { class: "group" }, el("p", { class: "format" }, format, ...(recliner ? [reclinerIcon()] : [])),
+      el("div", { class: "times" }, ...shows.map(s => timeButton(s, isToday, now)))));
+  }
+  const heading = el("h3", {}, t.name, ...(allRecliners ? [reclinerIcon()] : []));
+  return el("section", { class: "theater" }, heading, list);
+}
+
+function movieCard(m, isToday, now, recliners) {
   const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), about(m));
   return el("article", { class: "card movie" }, el("div", { class: "top" }, poster(m), info),
     el("div", { class: m.theaters.length === 1 ? "theaters single" : "theaters" },
-      ...m.theaters.map(t => theaterBlock(t, isToday, now))));
+      ...m.theaters.map(t => theaterBlock(t, isToday, now, recliners.has(t.name)))));
 }
 
 // One checkbox per theater in `data`; unchecked names persist across fetches.
@@ -551,7 +585,7 @@ function soonList(slots, now) {
       out.push(el("h2", { class: "hour" }, label));
     }
     const info = el("div", {}, el("p", { class: "title" }, displayTitle(m)),
-      el("p", { class: "where" }, [t.name, ...s.tags].join(" · ")), scores(m));
+      el("p", { class: "where" }, [t.name, ...s.tags].join(" · "), ...(s.recliner ? [reclinerIcon()] : [])), scores(m));
     out.push(el("article", { class: "card slot" }, timeButton(s, true, now), poster(m), info));
   }
   return out;
@@ -582,7 +616,8 @@ function render() {
     }
     out.push(...soonList(slots, now));
   } else {
-    for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now));
+    const recliners = reclinerTheaters();
+    for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now, recliners));
     if (finished) {
       out.push(el("p", { class: "finished" },
         `${plural(finished, "movie")} ${finished === 1 ? "has" : "have"} no more showtimes today.`));
