@@ -4,161 +4,198 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 <title>Showtimes</title>
 <style>
+  /* Every size on the page comes from these tokens. */
   :root {
     color-scheme: light dark;
-    --bg: #f6f6f4; --card: #fff; --text: #1b1b1b; --muted: #636363;
-    --line: #e2e2de; --chip: #eef2f7; --chip-text: #17365d;
-    --accent: #2458a6; --on-accent: #fff; --accent-soft: #e3ecf9;
-    --warn-bg: #fff4d6; --warn-text: #6a4b00; --focus: #2458a6; --rail: #ededea;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+    --control: 40px; --tab: 44px; --rail-width: 232px;
+    --r-sm: 6px; --r-lg: 12px;
+    --t-xs: 12px; --t-sm: 14px; --t-md: 16px; --t-lg: 20px;
+
+    --bg: #f6f6f4; --surface: #fff; --rail: #efefec; --line: #e2e2de;
+    --text: #1b1b1b; --text-2: #5f5f5f;
+    --fill: #eef2f7; --fill-text: #17365d;
+    --accent: #2458a6; --on-accent: #fff;
+    --warn-bg: #fff4d6; --warn-text: #6a4b00;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #121212; --card: #1d1d1f; --text: #ececec; --muted: #a0a0a0;
-      --line: #2e2e31; --chip: #243044; --chip-text: #d6e5ff;
-      --accent: #7fb0ff; --on-accent: #0b1a33; --accent-soft: #22324b;
-      --warn-bg: #3a3014; --warn-text: #f3d98b; --focus: #9cc2ff; --rail: #19191b;
+      --bg: #121212; --surface: #1b1b1d; --rail: #171719; --line: #2e2e31;
+      --text: #ececec; --text-2: #a0a0a0;
+      --fill: #243044; --fill-text: #d6e5ff;
+      --accent: #7fb0ff; --on-accent: #0b1a33;
+      --warn-bg: #3a3014; --warn-text: #f3d98b;
     }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text);
-         font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+         font: var(--t-md)/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; font-size: inherit; }
+  button, select { font-family: inherit; }
   a { color: var(--accent); }
-  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  [hidden] { display: none !important; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
              clip: rect(0 0 0 0); white-space: nowrap; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
-  .rail { font-size: 13px; background: var(--rail); border-right: 1px solid var(--line);
-          padding: 12px 16px; overflow-y: auto; }
-  .rail-head { display: flex; align-items: center; justify-content: space-between;
-               min-height: 40px; margin-bottom: 8px; }
-  .rail h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0; }
-  .rail fieldset { border: 0; padding: 0; margin: 0 0 16px; min-width: 0; }
-  .rail legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
-  .rail label { display: flex; align-items: center; gap: 8px; min-height: 30px; cursor: pointer; }
-  .rail .range { justify-content: space-between; min-height: 24px; cursor: default; }
-  .rail output { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 var(--s4); }
+
+  /* Components */
+  .button, .select { height: var(--control); border: 1px solid var(--line); border-radius: var(--r-sm);
+                     background: var(--surface); color: var(--text); font-size: var(--t-sm);
+                     font-weight: 600; cursor: pointer; }
+  .button { padding: 0 var(--s4); }
+  .button:hover, .select:hover { border-color: var(--text-2); }
+  .button.active { border-color: var(--accent); color: var(--accent); }
+  .select { min-width: 0; padding: 0 var(--s2); }
+  .text-button { height: var(--control); padding: 0; border: 0; background: none; color: var(--accent);
+                 font-size: var(--t-sm); font-weight: 600; cursor: pointer; }
+  .time { display: inline-flex; align-items: center; justify-content: center; height: var(--control);
+          min-width: 88px; padding: 0 var(--s3); border: 1px solid var(--line); border-radius: var(--r-sm);
+          background: var(--surface); color: var(--text); text-decoration: none;
+          font-size: var(--t-sm); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  a.time:hover { border-color: var(--accent); color: var(--accent); }
+  .time.past { color: var(--text-2); font-weight: 400; }
+  .time.soldout { text-decoration: line-through; opacity: .5; }
+  .scores { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); }
+  .score { display: inline-flex; align-items: center; gap: var(--s2); color: var(--text); text-decoration: none;
+           font-size: var(--t-md); font-weight: 700; font-variant-numeric: tabular-nums; }
+  a.score:hover .value { text-decoration: underline; }
+  .score.none .value { color: var(--text-2); font-weight: 400; }
+  .imdb-logo { background: #f5c518; color: #000; font: 800 var(--t-xs)/1 Impact, "Arial Black", sans-serif;
+               padding: 3px var(--s1); border-radius: 3px; }
+  .tomato { font-size: var(--t-md); line-height: 1; }
+  .splat { width: var(--t-md); height: var(--t-md); flex: none; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .poster { flex: none; object-fit: cover; border-radius: var(--r-sm); background: var(--fill); }
+  .banner { background: var(--warn-bg); color: var(--warn-text); border-radius: var(--r-sm);
+            padding: var(--s3) var(--s4); margin-bottom: var(--s3); font-size: var(--t-sm); }
+  .empty { color: var(--text-2); text-align: center; padding: var(--s6) 0; }
+  .finished { color: var(--text-2); font-size: var(--t-sm); text-align: center; padding: var(--s4) 0; }
+
+  /* Filter rail: fixed column from 900px, an overlay below that. */
+  .rail { background: var(--rail); border-right: 1px solid var(--line); overflow-y: auto;
+          padding: var(--s3) var(--s5) var(--s5); font-size: var(--t-sm); }
+  .brand { height: var(--control); display: flex; align-items: center; gap: var(--s2);
+           font-size: var(--t-lg); font-weight: 700; margin-bottom: var(--s5); }
+  .brand::before { content: ""; width: var(--s3); height: var(--s3); border-radius: 3px;
+                   background: var(--accent); transform: rotate(45deg); }
+  .rail-head { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s2); }
+  .rail-head h2 { font-size: var(--t-md); font-weight: 700; margin-right: auto; }
+  .rail fieldset { border: 0; padding: 0; margin: 0 0 var(--s5); min-width: 0; }
+  .rail legend { padding: 0; font-weight: 600; color: var(--text-2); margin-bottom: var(--s1); }
+  .rail label { display: flex; align-items: center; gap: var(--s3); height: var(--control); cursor: pointer; }
   .rail input { accent-color: var(--accent); margin: 0; }
-  .rail input[type=checkbox] { width: 16px; height: 16px; flex: none; }
-  .rail input[type=range] { width: 100%; min-height: 24px; margin-bottom: 6px; }
-  .rail .note { color: var(--muted); margin: 0 0 4px; }
-  .rail fieldset:disabled label, .rail fieldset:disabled input { opacity: .5; cursor: default; }
-  #filters-open { padding: 6px 14px; cursor: pointer; }
-  #filters-done { min-height: 32px; padding: 0 12px; cursor: pointer; }
+  .rail input[type=checkbox] { width: 18px; height: 18px; flex: none; }
+  .rail .range { justify-content: space-between; height: auto; margin-top: var(--s2); cursor: default; }
+  .rail input[type=range] { display: block; width: 100%; height: 28px; }
+  .rail output { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent); }
+  .rail output.any { font-weight: 400; color: var(--text-2); }
   @media (min-width: 900px) {
-    .rail { position: fixed; inset: 0 auto 0 0; width: 200px; }
-    .page { margin-left: 200px; }
+    .rail { position: fixed; inset: 0 auto 0 0; width: var(--rail-width); }
+    .page { margin-left: var(--rail-width); }
     #filters-open, #filters-done { display: none; }
   }
   @media (max-width: 899.98px) {
     .rail { display: none; }
-    .rail.open { display: block; position: fixed; inset: 0 auto 0 0; width: min(300px, 85vw); z-index: 10;
-                 box-shadow: 0 0 0 100vmax rgb(0 0 0 / .45); }
+    .rail.open { display: block; position: fixed; inset: 0 auto 0 0; width: min(320px, 86vw); z-index: 10;
+                 box-shadow: 0 0 0 100vmax rgb(0 0 0 / .5); }
   }
 
-  header { background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 0 0; }
+  /* Header: a toolbar row, then tabs sitting on the header's bottom edge. Both rows keep one
+     height in every view and state. */
+  header { background: var(--bg); border-bottom: 1px solid var(--line); }
   @media (min-width: 600px) {
-    header { position: sticky; top: 0; z-index: 1; }
+    header { position: sticky; top: 0; z-index: 2; }
   }
-  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .pick { display: flex; gap: 8px; }
-  input[type=date], button { font: inherit; border-radius: 8px; min-height: 40px;
-         border: 1px solid var(--line); background: var(--card); color: var(--text); }
-  input[type=date] { padding: 6px 10px; }
-  #fetch { padding: 6px 16px; background: var(--accent); color: var(--on-accent);
-           border-color: var(--accent); font-weight: 600; cursor: pointer; }
-  #fetch:disabled { opacity: .6; cursor: default; }
-  .sort { display: inline-flex; margin-left: auto; border: 1px solid var(--line);
-          border-radius: 8px; overflow: hidden; background: var(--card); }
-  .sort button { border: 0; border-radius: 0; min-height: 38px; padding: 0 12px;
-                 font-size: 14px; background: transparent; cursor: pointer; }
-  .sort button + button { border-left: 1px solid var(--line); }
-  .sort button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
-  #status { color: var(--muted); font-size: 13px; margin-top: 8px; min-height: 1.45em; }
+  header > .wrap { padding-top: var(--s3); }
+  .toolbar { display: flex; align-items: center; gap: var(--s2); height: var(--control);
+             margin-bottom: var(--s3); }
+  .toolbar .scope { font-size: var(--t-sm); font-weight: 600; white-space: nowrap; }
+  .sort { display: flex; align-items: center; gap: var(--s2); min-width: 0; margin-left: auto;
+          font-size: var(--t-sm); color: var(--text-2); }
+  #filters-open { margin-left: auto; }
+  #sort-box:not([hidden]) + #filters-open { margin-left: 0; }
+  .tabs { display: flex; gap: var(--s5); }
+  .tabs button { height: var(--tab); padding: 0; border: 0; background: none; cursor: pointer;
+                 color: var(--text-2); font-size: var(--t-md); font-weight: 600;
+                 box-shadow: inset 0 -2px 0 transparent; margin-bottom: -1px; }
+  .tabs button:hover { color: var(--text); }
+  .tabs button[aria-selected=true] { color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+  @media (max-width: 599.98px) {
+    .sort > span { display: none; }
+    .toolbar > .select, .sort { flex: 1 1 0; }
+    .sort .select { width: 100%; }
+  }
 
-  main.wrap { padding-top: 12px; padding-bottom: 24px; transition: opacity .15s; }
+  /* Page body */
+  #status { color: var(--text-2); font-size: var(--t-sm); height: 20px; margin: var(--s4) 0 var(--s3); }
+  main.wrap { padding-bottom: var(--s6); transition: opacity .15s; }
   main[aria-busy=true] { opacity: .5; }
   @media (prefers-reduced-motion: reduce) { main { transition: none; } }
-  .banner { background: var(--warn-bg); color: var(--warn-text); border-radius: 8px;
-            padding: 8px 12px; margin-bottom: 8px; font-size: 14px; }
-  .empty { color: var(--muted); text-align: center; padding: 32px 0; }
 
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
-          padding: 14px; margin-bottom: 12px; }
-  .top { display: flex; gap: 12px; }
-  .top .info { min-width: 0; flex: 1; }
-  .poster { width: 64px; height: 96px; object-fit: cover; border-radius: 6px; flex: none;
-            background: var(--line); }
-  .card h2 { font-size: 18px; line-height: 1.25; margin: 0 0 4px; }
-  .meta { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-  .scores { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 15px; margin-bottom: 4px; }
-  .scores a, .scores span.none { display: inline-flex; align-items: center; gap: 5px;
-                                 min-height: 28px; text-decoration: none; }
-  .scores a { color: var(--text); }
-  .scores a:hover .value { text-decoration: underline; }
-  .scores .value { font-weight: 700; font-variant-numeric: tabular-nums; }
-  .scores .none { color: var(--muted); }
-  .imdb-logo { background: #f5c518; color: #000; font-weight: 800; font-size: 11px;
-               padding: 1px 4px; border-radius: 3px; letter-spacing: -.2px;
-               font-family: Impact, "Arial Black", sans-serif; }
-  .splat { width: 1.1em; height: 1.1em; flex: none; }
-  details { font-size: 14px; }
-  details summary { cursor: pointer; color: var(--accent); font-size: 13px;
-                    min-height: 28px; display: flex; align-items: center; }
-  details summary::-webkit-details-marker { display: none; }
-  details summary::before { content: "▸"; margin-right: 4px; }
-  details[open] summary::before { content: "▾"; }
-  details p { margin: 4px 0 6px; }
-  details .label { font-weight: 600; }
+  /* All movies */
+  .movie { padding: var(--s4) var(--s4) 0; margin-bottom: var(--s3); }
+  .movie .top { display: flex; gap: var(--s4); }
+  .movie .poster { width: 80px; height: 120px; }
+  .movie .info { min-width: 0; flex: 1; }
+  .movie h2 { font-size: var(--t-lg); font-weight: 700; line-height: 1.25; }
+  .meta { font-size: var(--t-sm); color: var(--text-2); margin: var(--s1) 0 var(--s3); }
+  .meta .keep { white-space: nowrap; }
+  .about { margin-top: var(--s2); font-size: var(--t-sm); color: var(--text-2); }
+  .synopsis { display: flex; align-items: baseline; gap: var(--s1); }
+  .synopsis .clip { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .about.open .synopsis { display: block; }
+  .about.open .clip { white-space: normal; }
+  .about .text-button { height: auto; flex: none; }
+  .consensus { margin-top: var(--s2); }
+  .consensus .label { font-weight: 700; color: var(--text); }
+  /* Balanced columns at least 260px wide: two in a desktop card, one on a phone. Several theaters
+     flow as whole theaters; a single theater's format groups flow instead. */
+  .theaters { column-width: 260px; column-gap: var(--s5); border-top: 1px solid var(--line);
+              margin-top: var(--s4); padding-top: var(--s4); }
+  .theaters.single { column-width: auto; }
+  .theaters.single .groups { column-width: 260px; column-gap: var(--s5); }
+  .theater { break-inside: avoid; padding-bottom: var(--s1); }
+  .theaters.single .theater { break-inside: auto; }
+  .theater h3 { font-size: var(--t-sm); font-weight: 700; margin-bottom: var(--s2); }
+  .group { break-inside: avoid; padding-bottom: var(--s3); }
+  .format { font-size: var(--t-xs); color: var(--text-2); margin-bottom: var(--s1); }
+  .times { display: flex; flex-wrap: wrap; gap: var(--s2); }
 
-  .theater { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 10px; }
-  .theater h3 { font-size: 14px; margin: 0 0 6px; font-weight: 600; }
-  .group { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: start;
-           margin-bottom: 6px; }
-  .format { font-size: 12px; color: var(--muted); line-height: 36px; overflow-wrap: anywhere; }
-  .times { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px;
-          border-radius: 999px; font-size: 14px; background: var(--chip); color: var(--chip-text);
-          text-decoration: none; font-variant-numeric: tabular-nums; }
-  a.chip:hover { outline: 1px solid var(--chip-text); }
-  .chip.soldout { text-decoration: line-through; opacity: .6; }
-  .chip.past { opacity: .4; }
+  /* Playing soon */
+  .hour { font-size: var(--t-sm); font-weight: 700; color: var(--text-2); margin: var(--s5) 0 var(--s2); }
+  .hour:first-of-type { margin-top: 0; }
+  .slot { display: grid; grid-template-columns: 88px 40px 1fr; gap: var(--s3); align-items: center;
+          padding: var(--s3); margin-bottom: var(--s2); }
+  .slot .poster { width: 40px; height: 60px; }
+  .slot .title { font-weight: 700; line-height: 1.25; }
+  .slot .where { font-size: var(--t-sm); color: var(--text-2); margin-bottom: var(--s1); }
+  .slot .score { font-size: var(--t-sm); }
 
-  [hidden] { display: none !important; }
-  .tabs { display: flex; gap: 4px; margin-top: 6px; }
-  .tabs button { border: 0; border-radius: 0; background: transparent; color: var(--muted);
-                 font-weight: 600; padding: 0 12px; min-height: 40px; cursor: pointer;
-                 box-shadow: inset 0 -2px 0 transparent; }
-  .tabs button:first-child { padding-left: 0; }
-  .tabs button[aria-selected=true] { color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
-  .hour { font-size: 13px; font-weight: 600; color: var(--muted); margin: 16px 0 6px; }
-  .hour:first-of-type { margin-top: 4px; }
-  .slot { display: grid; grid-template-columns: 84px 36px 1fr; gap: 10px; align-items: start;
-          background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-          padding: 8px 10px; margin-bottom: 6px; }
-  .slot .chip { justify-content: center; }
-  .slot img, .slot .noposter { width: 36px; height: 54px; object-fit: cover; border-radius: 4px;
-                               background: var(--line); }
-  .slot .title { font-weight: 600; line-height: 1.25; }
-  .slot .where { font-size: 13px; color: var(--muted); }
-  .slot .scores { margin: 2px 0 0; font-size: 14px; }
-
-  footer.wrap { text-align: center; font-size: 12px; padding-bottom: 24px; }
-  footer a { color: var(--muted); }
+  footer.wrap { text-align: center; font-size: var(--t-xs); padding-bottom: var(--s6); }
+  footer a { color: var(--text-2); }
   footer a[aria-disabled=true] { pointer-events: none; opacity: .6; }
 </style>
 </head>
 <body>
 <aside class="rail" id="filters" aria-label="Filters" tabindex="-1">
-  <div class="rail-head"><h2>Filters</h2><button type="button" id="filters-done">Done</button></div>
+  <div class="brand" aria-hidden="true">Showtimes</div>
+  <div class="rail-head">
+    <h2>Filters</h2>
+    <button type="button" class="text-button" id="filters-clear" hidden>Clear all</button>
+    <button type="button" class="button" id="filters-done">Done</button>
+  </div>
   <fieldset id="theaters"><legend>Theaters</legend></fieldset>
-  <fieldset id="score-filter" disabled>
+  <fieldset id="score-filter" hidden>
     <legend>Minimum scores</legend>
-    <p class="note" id="score-note">Playing soon only</p>
-    <label class="range" for="min-imdb">IMDb <output id="min-imdb-out" for="min-imdb">Any</output></label>
+    <label class="range" for="min-imdb">IMDb <output id="min-imdb-out" for="min-imdb" class="any">Any</output></label>
     <input type="range" id="min-imdb" min="0" max="10" step="0.5" value="0">
-    <label class="range" for="min-rt">RT critics <output id="min-rt-out" for="min-rt">Any</output></label>
+    <label class="range" for="min-rt">RT critics <output id="min-rt-out" for="min-rt" class="any">Any</output></label>
     <input type="range" id="min-rt" min="0" max="100" step="5" value="0">
   </fieldset>
 </aside>
@@ -166,26 +203,26 @@
 <header>
   <div class="wrap">
     <h1 class="sr-only">Showtimes</h1>
-    <form class="controls" id="controls">
-      <div class="pick">
-        <input type="date" id="day" aria-label="Date" required>
-        <button type="submit" id="fetch">Fetch</button>
-        <button type="button" id="filters-open" aria-controls="filters" aria-expanded="false">Filters</button>
-      </div>
-      <div class="sort" role="group" aria-label="Sort by">
-        <button type="button" data-sort="title" aria-pressed="true">Title</button>
-        <button type="button" data-sort="overall" aria-pressed="false">Overall</button>
-        <button type="button" data-sort="imdb" aria-pressed="false">IMDb</button>
-        <button type="button" data-sort="rt" aria-pressed="false">RT</button>
-      </div>
-    </form>
-    <div id="status" role="status" aria-live="polite"></div>
+    <div class="toolbar">
+      <select class="select" id="day" aria-label="Date"></select>
+      <span class="scope" id="window" hidden></span>
+      <label class="sort" id="sort-box"><span>Sort</span>
+        <select class="select" id="sort">
+          <option value="title">Title A–Z</option>
+          <option value="overall">Best overall</option>
+          <option value="imdb">IMDb rating</option>
+          <option value="rt">RT critics</option>
+        </select>
+      </label>
+      <button type="button" class="button" id="filters-open" aria-controls="filters" aria-expanded="false">Filters</button>
+    </div>
     <div class="tabs" role="tablist" aria-label="View">
       <button type="button" role="tab" id="tab-movies" data-view="movies" aria-selected="true" aria-controls="out">All movies</button>
       <button type="button" role="tab" id="tab-soon" data-view="soon" aria-selected="false" aria-controls="out" tabindex="-1">Playing soon</button>
     </div>
   </div>
 </header>
+<div class="wrap"><p id="status" role="status" aria-live="polite"></p></div>
 <main id="out" class="wrap" role="tabpanel" aria-labelledby="tab-movies" aria-busy="false"></main>
 <footer class="wrap"><a href="#" id="refresh">Manually update caches</a></footer>
 </div>
@@ -193,10 +230,12 @@
 const TZ = __TIMEZONE__;
 // A static page reads prebuilt data/<date>.json files; it has no server to refresh caches.
 const STATIC = __STATIC__;
-const FAR_DAYS = 7;
+const DAYS = __DAYS__;
+const SOON_HOURS = 3;
 let data = null;
 let sortKey = "title";
 let view = "movies";
+let selectedDay = null;
 const hiddenTheaters = new Set();
 
 function el(tag, attrs = {}, ...children) {
@@ -219,8 +258,10 @@ function wallClock() {
   return { day, now: `${day}T${parts.hour}:${parts.minute}` };
 }
 
-function daysBetween(a, b) {
-  return Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+function addDays(iso, n) {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
 }
 
 // "YYYY-MM-DD" as a calendar date; UTC keeps the day from shifting.
@@ -228,17 +269,36 @@ function formatDay(iso, options) {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString([], { timeZone: "UTC", ...options });
 }
 
+// "YYYY-MM-DDTHH:MM" as "3:40 PM".
+function formatClock(at) {
+  const h = +at.slice(11, 13);
+  return `${h % 12 || 12}:${at.slice(14, 16)} ${h < 12 ? "AM" : "PM"}`;
+}
+
+function dayPicker() {
+  const today = wallClock().day;
+  const select = document.getElementById("day");
+  select.replaceChildren(...Array.from({ length: DAYS }, (_, n) => {
+    const iso = addDays(today, n);
+    const label = n === 0 ? "Today" : n === 1 ? "Tomorrow" : formatDay(iso, { weekday: "short", month: "short", day: "numeric" });
+    return el("option", { value: iso }, label);
+  }));
+  select.value = selectedDay;
+  select.addEventListener("change", () => {
+    selectedDay = select.value;
+    fetchDay();
+  });
+}
+
 let busy = false;
 
 async function fetchDay(refresh = false) {
-  const day = document.getElementById("day").value;
+  const day = selectedDay;
   if (!day || busy) return;
   busy = true;
-  const button = document.getElementById("fetch");
   const link = document.getElementById("refresh");
   const status = document.getElementById("status");
   const out = document.getElementById("out");
-  button.disabled = true;
   link.setAttribute("aria-disabled", "true");
   out.setAttribute("aria-busy", "true");
   status.textContent = refresh ? "Updating caches…" : "Loading…";
@@ -256,13 +316,14 @@ async function fetchDay(refresh = false) {
   } catch (err) {
     data = null;
     status.textContent = "";
-    out.replaceChildren(el("div", { class: "banner" }, `Fetch failed: ${err.message}`));
+    out.replaceChildren(el("div", { class: "banner" }, `Couldn't load showtimes: ${err.message}`));
   } finally {
-    button.disabled = false;
     link.removeAttribute("aria-disabled");
     out.setAttribute("aria-busy", "false");
     busy = false;
   }
+  // A day chosen while another was loading is fetched once that load ends.
+  if (data && data.date !== selectedDay) fetchDay();
 }
 
 // Mean of whichever of IMDb (x10) and RT critics exist, on a 0-100 scale.
@@ -285,7 +346,7 @@ function compare(a, b) {
   return vb - va || byTitle;
 }
 
-// Fandango's "(YYYY)" suffix, dropped when it repeats the release year shown below the title.
+// Fandango's "(YYYY)" suffix, dropped when it matches the release year.
 function displayTitle(m) {
   const year = (m.release_date || "").slice(0, 4);
   return year ? m.title.replace(new RegExp(`\\s*\\(${year}\\)$`), "") : m.title;
@@ -311,64 +372,100 @@ function splat() {
 }
 
 function scores(m) {
-  const imdbValue = m.imdb_rating ?? "—";
   const imdbParts = [el("span", { class: "imdb-logo", "aria-hidden": "true" }, "IMDb"),
-                     el("span", { class: "value" }, imdbValue)];
+                     el("span", { class: "value" }, m.imdb_rating ?? "—")];
   const imdbLabel = `IMDb rating ${m.imdb_rating ?? "unavailable"}`;
   const imdb = m.imdb_id
-    ? el("a", { href: `https://www.imdb.com/title/${m.imdb_id}/`, target: "_blank", rel: "noopener",
-                "aria-label": imdbLabel }, ...imdbParts)
-    : el("span", { class: "none", "aria-label": imdbLabel }, ...imdbParts);
+    ? el("a", { class: m.imdb_rating == null ? "score none" : "score", href: `https://www.imdb.com/title/${m.imdb_id}/`,
+                target: "_blank", rel: "noopener", "aria-label": imdbLabel }, ...imdbParts)
+    : el("span", { class: "score none", "aria-label": imdbLabel }, ...imdbParts);
   const rtValue = m.rt_critics == null ? "—" : `${m.rt_critics}%`;
   const rotten = m.rt_critics != null && m.rt_critics < ROTTEN_BELOW;
-  const rtParts = [rotten ? splat() : el("span", { "aria-hidden": "true" }, "🍅"), el("span", { class: "value" }, rtValue)];
+  const rtParts = [rotten ? splat() : el("span", { class: "tomato", "aria-hidden": "true" }, "🍅"),
+                   el("span", { class: "value" }, rtValue)];
   const rtLabel = `Rotten Tomatoes critics ${m.rt_critics == null ? "unavailable" : `${rtValue}${rotten ? ", rotten" : ""}`}`;
   const rt = m.rt_url
-    ? el("a", { href: m.rt_url, target: "_blank", rel: "noopener", "aria-label": rtLabel }, ...rtParts)
-    : el("span", { class: "none", "aria-label": rtLabel }, ...rtParts);
+    ? el("a", { class: m.rt_critics == null ? "score none" : "score", href: m.rt_url, target: "_blank",
+                rel: "noopener", "aria-label": rtLabel }, ...rtParts)
+    : el("span", { class: "score none", "aria-label": rtLabel }, ...rtParts);
   return el("div", { class: "scores" }, imdb, rt);
 }
 
 function meta(m) {
   const parts = [];
-  if (m.release_date) parts.push(formatDay(m.release_date, { month: "short", day: "numeric", year: "numeric" }));
-  if (m.genres && m.genres.length) parts.push(m.genres.join(", "));
-  if (m.runtime) parts.push(`${Math.floor(m.runtime / 60)}h ${m.runtime % 60}m`);
-  return el("div", { class: "meta" }, parts.join(" · "));
+  if (m.runtime) parts.push(el("span", { class: "keep" }, `${Math.floor(m.runtime / 60)}h ${m.runtime % 60}m`));
+  if (m.genres && m.genres.length) parts.push(m.genres[0]);
+  if (m.release_date && m.release_date > data.date) {
+    parts.push(el("span", { class: "keep" }, `Opens ${formatDay(m.release_date, { month: "short", day: "numeric" })}`));
+  }
+  return el("p", { class: "meta" }, ...parts.flatMap((part, i) => i ? [" · ", part] : [part]));
 }
 
-function more(m) {
-  if (!m.rt_consensus && !m.synopsis) return "";
-  const box = el("details", {}, el("summary", {}, "More"));
-  if (m.rt_consensus) box.append(el("p", {}, el("span", { class: "label" }, "Critics Consensus: "), m.rt_consensus));
-  if (m.synopsis) box.append(el("p", {}, m.synopsis));
+// The synopsis on one line, with "more" at its end to show all of it and the critics consensus.
+function about(m) {
+  const text = m.synopsis || m.rt_consensus;
+  if (!text) return "";
+  const toggle = el("button", { type: "button", class: "text-button", "aria-expanded": "false" }, "more");
+  const consensus = m.synopsis && m.rt_consensus
+    ? el("p", { class: "consensus", hidden: "" }, el("span", { class: "label" }, "Critics Consensus: "), m.rt_consensus)
+    : "";
+  const box = el("div", { class: "about" }, el("p", { class: "synopsis" }, el("span", { class: "clip" }, text), " ", toggle),
+    consensus);
+  toggle.addEventListener("click", () => {
+    const open = box.classList.toggle("open");
+    toggle.textContent = open ? "less" : "more";
+    toggle.setAttribute("aria-expanded", open);
+    if (consensus) consensus.hidden = !open;
+  });
   return box;
 }
 
-function chip(s, isToday, now) {
+// Hides "more" where the synopsis fits on its line and there is no consensus to show.
+function trimAbout() {
+  for (const box of document.querySelectorAll(".about:not(.open)")) {
+    const clip = box.querySelector(".clip");
+    box.querySelector(".text-button").hidden = !box.querySelector(".consensus") && clip.scrollWidth <= clip.clientWidth;
+  }
+}
+
+function poster(m) {
+  return m.poster ? el("img", { class: "poster", src: m.poster, alt: "", loading: "lazy" })
+                  : el("div", { class: "poster" });
+}
+
+function timeButton(s, isToday, now) {
   const past = s.status === "pastshowtime" || (isToday && s.at < now);
   const soldOut = s.status === "soldout";
-  const cls = ["chip", past ? "past" : "", soldOut ? "soldout" : ""].join(" ").trim();
+  const cls = ["time", past ? "past" : "", soldOut ? "soldout" : ""].join(" ").trim();
   const note = soldOut ? " (sold out)" : past ? " (started)" : "";
-  const parts = [s.label, ...(note ? [el("span", { class: "sr-only" }, note)] : [])];
+  const parts = [formatClock(s.at), ...(note ? [el("span", { class: "sr-only" }, note)] : [])];
   return soldOut || !s.ticket_url
     ? el("span", { class: cls }, ...parts)
     : el("a", { class: cls, href: s.ticket_url, target: "_blank", rel: "noopener" }, ...parts);
 }
 
+// A theater's showtimes grouped by format, Standard first, each group in time order.
 function theaterBlock(t, isToday, now) {
-  const groups = new Map();
-  for (const s of t.showtimes) {
+  const groups = new Map([["Standard", []]]);
+  for (const s of [...t.showtimes].sort((a, b) => a.at.localeCompare(b.at))) {
     const key = s.tags.length ? s.tags.join(" · ") : "Standard";
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(s);
   }
-  const block = el("section", { class: "theater" }, el("h3", {}, t.name));
+  const list = el("div", { class: "groups" });
   for (const [format, shows] of groups) {
-    block.append(el("div", { class: "group" }, el("span", { class: "format" }, format),
-      el("div", { class: "times" }, ...shows.map(s => chip(s, isToday, now)))));
+    if (!shows.length) continue;
+    list.append(el("div", { class: "group" }, el("p", { class: "format" }, format),
+      el("div", { class: "times" }, ...shows.map(s => timeButton(s, isToday, now)))));
   }
-  return block;
+  return el("section", { class: "theater" }, el("h3", {}, t.name), list);
+}
+
+function movieCard(m, isToday, now) {
+  const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), about(m));
+  return el("article", { class: "card movie" }, el("div", { class: "top" }, poster(m), info),
+    el("div", { class: m.theaters.length === 1 ? "theaters single" : "theaters" },
+      ...m.theaters.map(t => theaterBlock(t, isToday, now))));
 }
 
 // One checkbox per theater in `data`; unchecked names persist across fetches.
@@ -388,73 +485,50 @@ function theaterOptions() {
   }));
 }
 
-// Movies limited to checked theaters. On Playing soon, movies below a minimum score are dropped;
-// a missing score never drops a movie.
-function visibleMovies() {
+// AMC runs about 20 minutes of previews, so a show that started this recently can still be caught.
+const LATE_MINUTES = 20;
+
+// Movies limited to checked theaters and, when `since` is set, to showtimes starting at or after it.
+// On Playing soon, movies below a minimum score are dropped; a missing score never drops a movie.
+// Returns the movies, and how many had showtimes at checked theaters but none left after `since`.
+function visibleMovies(since) {
   const soon = view === "soon";
   const minImdb = soon ? +document.getElementById("min-imdb").value : 0;
   const minRt = soon ? +document.getElementById("min-rt").value : 0;
-  const out = [];
+  const movies = [];
+  let finished = 0;
   for (const m of data.movies) {
     if (m.imdb_rating != null && parseFloat(m.imdb_rating) < minImdb) continue;
     if (m.rt_critics != null && m.rt_critics < minRt) continue;
-    const theaters = m.theaters.filter(t => !hiddenTheaters.has(t.name));
-    if (theaters.length) out.push({ ...m, theaters });
-  }
-  return out;
-}
-
-function render() {
-  if (!data) return;
-  const { day: today, now } = wallClock();
-  const isToday = data.date === today;
-  const out = [];
-  if (data.failed.length) out.push(el("div", { class: "banner" }, `Couldn't load: ${data.failed.join(", ")}`));
-  for (const w of data.warnings) out.push(el("div", { class: "banner" }, w));
-  if (daysBetween(today, data.date) > FAR_DAYS) {
-    out.push(el("div", { class: "banner" }, "Dates more than a week out are often only partly published."));
-  }
-  if (data.no_showtimes) out.push(el("p", { class: "empty" }, "No showtimes published for this date."));
-  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
-  const movies = visibleMovies();
-  const filteredOut = data.movies.length > 0 && movies.length === 0;
-  if (filteredOut) out.push(el("p", { class: "empty" }, "No movies match the filters."));
-  let count = plural(movies.length, "movie");
-  if (view === "soon") {
-    const slots = upcoming(movies, isToday, now);
-    count += ` · ${plural(slots.length, "showtime")}${isToday ? " left" : ""}`;
-    if (!slots.length && !data.no_showtimes && !filteredOut) {
-      out.push(el("p", { class: "empty" }, "No more showtimes for this date."));
+    let theaters = m.theaters.filter(t => !hiddenTheaters.has(t.name));
+    if (!theaters.length) continue;
+    if (since) {
+      theaters = theaters.map(t => ({ ...t, showtimes: t.showtimes.filter(s => s.at >= since) }))
+        .filter(t => t.showtimes.length);
+      if (!theaters.length) {
+        finished++;
+        continue;
+      }
     }
-    out.push(...soonList(slots));
-  } else {
-    for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now));
+    movies.push({ ...m, theaters });
   }
-  document.getElementById("out").replaceChildren(...out);
-  const active = hiddenTheaters.size + (view === "soon"
-    ? ["min-imdb", "min-rt"].filter(id => +document.getElementById(id).value).length : 0);
-  document.getElementById("filters-open").textContent = active ? `Filters · ${active}` : "Filters";
-  const fetched = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
-  document.getElementById("status").textContent =
-    `${formatDay(data.date, { weekday: "short", month: "short", day: "numeric" })} · ${count} · fetched ${fetched}`;
+  return { movies, finished };
 }
 
-function movieCard(m, isToday, now) {
-  const info = el("div", { class: "info" }, el("h2", {}, displayTitle(m)), meta(m), scores(m), more(m));
-  const top = el("div", { class: "top" },
-    m.poster ? el("img", { class: "poster", src: m.poster, alt: "", loading: "lazy" }) : "", info);
-  const card = el("article", { class: "card" }, top);
-  for (const t of m.theaters) card.append(theaterBlock(t, isToday, now));
-  return card;
+// `at` ("YYYY-MM-DDTHH:MM") moved by `minutes`, in the same format.
+function shiftClock(at, minutes) {
+  const d = new Date(`${at}Z`);
+  d.setUTCMinutes(d.getUTCMinutes() + minutes);
+  return d.toISOString().slice(0, 16);
 }
 
-// Every showtime in `movies` that hasn't started, earliest first.
-function upcoming(movies, isToday, now) {
+// Showtimes in `movies` starting from `since` through `until`, earliest first.
+function upcoming(movies, since, until) {
   const slots = [];
   for (const m of movies) {
     for (const t of m.theaters) {
       for (const s of t.showtimes) {
-        if (s.status === "pastshowtime" || (isToday && s.at < now)) continue;
+        if (s.at < since || s.at > until) continue;
         slots.push({ m, t, s });
       }
     }
@@ -465,7 +539,7 @@ function upcoming(movies, isToday, now) {
 }
 
 // Slots under an hour heading such as "3 PM"; shows after midnight are marked as the next day.
-function soonList(slots) {
+function soonList(slots, now) {
   const out = [];
   let lastHour = null;
   for (const { m, t, s } of slots) {
@@ -476,13 +550,65 @@ function soonList(slots) {
       const label = `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}${s.at.slice(0, 10) !== data.date ? " (next day)" : ""}`;
       out.push(el("h2", { class: "hour" }, label));
     }
-    const where = [t.name, ...s.tags].join(" · ");
-    const info = el("div", {}, el("div", { class: "title" }, displayTitle(m)),
-      el("div", { class: "where" }, where), scores(m));
-    out.push(el("article", { class: "slot" }, chip(s, false, ""),
-      m.poster ? el("img", { src: m.poster, alt: "", loading: "lazy" }) : el("div", { class: "noposter" }), info));
+    const info = el("div", {}, el("p", { class: "title" }, displayTitle(m)),
+      el("p", { class: "where" }, [t.name, ...s.tags].join(" · ")), scores(m));
+    out.push(el("article", { class: "card slot" }, timeButton(s, true, now), poster(m), info));
   }
   return out;
+}
+
+function render() {
+  filterState();
+  const { day: today, now } = wallClock();
+  const since = shiftClock(now, -LATE_MINUTES);
+  const until = shiftClock(now, SOON_HOURS * 60);
+  document.getElementById("window").textContent = `Today, ${formatClock(since)} – ${formatClock(until)}`;
+  if (!data) return;
+  const isToday = data.date === today;
+  const out = [];
+  if (data.failed.length) out.push(el("div", { class: "banner" }, `Couldn't load: ${data.failed.join(", ")}`));
+  for (const w of data.warnings) out.push(el("div", { class: "banner" }, w));
+  if (data.no_showtimes) out.push(el("p", { class: "empty" }, "No showtimes published for this date."));
+  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  const { movies, finished } = visibleMovies(isToday ? since : null);
+  const filteredOut = data.movies.length > 0 && movies.length === 0 && !finished;
+  if (filteredOut) out.push(el("p", { class: "empty" }, "No movies match the filters."));
+  let count = plural(movies.length, "movie");
+  if (view === "soon") {
+    const slots = upcoming(movies, since, until);
+    count = `${plural(slots.length, "showtime")} · ${plural(new Set(slots.map(x => x.m.id)).size, "movie")}`;
+    if (!slots.length && !data.no_showtimes && !filteredOut) {
+      out.push(el("p", { class: "empty" }, `Nothing starts in the next ${SOON_HOURS} hours.`));
+    }
+    out.push(...soonList(slots, now));
+  } else {
+    for (const m of movies.sort(compare)) out.push(movieCard(m, isToday, now));
+    if (finished) {
+      out.push(el("p", { class: "finished" },
+        `${plural(finished, "movie")} ${finished === 1 ? "has" : "have"} no more showtimes today.`));
+    }
+  }
+  document.getElementById("out").replaceChildren(...out);
+  trimAbout();
+  const updated = new Date(data.fetched_at).toLocaleTimeString([], { timeZone: TZ, hour: "numeric", minute: "2-digit" });
+  document.getElementById("status").textContent = `${count} · updated ${updated}`;
+}
+
+// Filter button count, "Clear all", and the filters and view kept in the URL.
+function filterState() {
+  const sliders = ["min-imdb", "min-rt"].filter(id => +document.getElementById(id).value);
+  const active = hiddenTheaters.size + (view === "soon" ? sliders.length : 0);
+  const open = document.getElementById("filters-open");
+  open.textContent = active ? `Filters · ${active}` : "Filters";
+  open.classList.toggle("active", active > 0);
+  document.getElementById("filters-clear").hidden = !hiddenTheaters.size && !sliders.length;
+  const query = new URLSearchParams();
+  if (view !== "movies") query.set("view", view);
+  if (sortKey !== "title") query.set("sort", sortKey);
+  for (const name of hiddenTheaters) query.append("hide", name);
+  for (const id of sliders) query.set(id, document.getElementById(id).value);
+  const qs = query.toString();
+  history.replaceState(null, "", qs ? `?${qs}` : location.pathname);
 }
 
 function selectView(name) {
@@ -493,38 +619,70 @@ function selectView(name) {
     tab.tabIndex = on ? 0 : -1;
     if (on) document.getElementById("out").setAttribute("aria-labelledby", tab.id);
   }
-  document.querySelector(".sort").hidden = name !== "movies";
-  document.getElementById("score-filter").disabled = name !== "soon";
-  document.getElementById("score-note").hidden = name === "soon";
+  document.getElementById("day").hidden = name !== "movies";
+  document.getElementById("sort-box").hidden = name !== "movies";
+  document.getElementById("window").hidden = name !== "soon";
+  document.getElementById("score-filter").hidden = name !== "soon";
+  const today = wallClock().day;
+  if (name === "soon" && selectedDay !== today) {
+    selectedDay = document.getElementById("day").value = today;
+    fetchDay();
+  }
   render();
 }
 
-document.getElementById("day").value = wallClock().day;
+function showValue(input) {
+  const v = +input.value;
+  const text = !v ? "Any" : input.id === "min-imdb" ? `${v.toFixed(1)}+` : `${v}%+`;
+  const output = document.getElementById(`${input.id}-out`);
+  output.textContent = text;
+  output.classList.toggle("any", !v);
+  input.setAttribute("aria-valuetext", text);
+}
+
+// Restores the view, sort and filters saved in the URL by filterState.
+function loadState() {
+  const query = new URLSearchParams(location.search);
+  if (query.get("view") === "soon") view = "soon";
+  const sort = document.getElementById("sort");
+  if ([...sort.options].some(o => o.value === query.get("sort"))) sortKey = sort.value = query.get("sort");
+  for (const name of query.getAll("hide")) hiddenTheaters.add(name);
+  for (const id of ["min-imdb", "min-rt"]) {
+    const input = document.getElementById(id);
+    if (query.has(id)) input.value = query.get(id);
+    showValue(input);
+  }
+}
+
+loadState();
+selectedDay = wallClock().day;
+dayPicker();
 document.querySelector("footer").hidden = STATIC;
-document.getElementById("controls").addEventListener("submit", e => {
-  e.preventDefault();
-  fetchDay();
-});
 document.getElementById("refresh").addEventListener("click", e => {
   e.preventDefault();
   fetchDay(true);
 });
-for (const b of document.querySelectorAll(".sort button")) {
-  b.addEventListener("click", () => {
-    sortKey = b.dataset.sort;
-    for (const o of document.querySelectorAll(".sort button")) o.setAttribute("aria-pressed", o === b);
-    render();
-  });
-}
-for (const [id, format] of [["min-imdb", v => v.toFixed(1)], ["min-rt", v => `${v}%`]]) {
+document.getElementById("sort").addEventListener("change", e => {
+  sortKey = e.target.value;
+  render();
+});
+for (const id of ["min-imdb", "min-rt"]) {
   const input = document.getElementById(id);
   input.addEventListener("input", () => {
-    const text = +input.value ? `${format(+input.value)}+` : "Any";
-    document.getElementById(`${id}-out`).textContent = text;
-    input.setAttribute("aria-valuetext", text);
+    showValue(input);
     render();
   });
 }
+document.getElementById("filters-clear").addEventListener("click", () => {
+  hiddenTheaters.clear();
+  for (const id of ["min-imdb", "min-rt"]) {
+    const input = document.getElementById(id);
+    input.value = 0;
+    showValue(input);
+  }
+  for (const box of document.querySelectorAll("#theaters input")) box.checked = true;
+  render();
+});
 // Below 900px the filter rail is an overlay opened from the header.
 const rail = document.getElementById("filters");
 const openFilters = document.getElementById("filters-open");
@@ -548,6 +706,7 @@ for (const tab of tabs) {
     selectView(next.dataset.view);
   });
 }
+selectView(view);
 fetchDay();
 </script>
 </body>
