@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
-<title>Showtimes</title>
+<title>Andy's Awesome Movie Machine</title>
 <style>
   /* Every size on the page comes from these tokens. */
   :root {
@@ -44,6 +44,26 @@
              clip: rect(0 0 0 0); white-space: nowrap; }
   .wrap { max-width: 780px; margin: 0 auto; padding: 0 var(--s4); }
 
+  /* Banner: a film strip with a projector casting the title. It stays dark in both color schemes. */
+  @font-face { font-family: "Bungee"; font-display: swap;
+               src: url("static/fonts/Bungee-Regular.woff2") format("woff2"); }
+  .marquee { position: relative; height: 136px; overflow: hidden;
+             background: radial-gradient(120% 140% at 12% 50%, #2b2419 0%, #121110 55%, #0b0b0b 100%); }
+  .marquee .strip { position: absolute; left: 0; right: 0; height: var(--s3);
+                    background: #050505 url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2212%22%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%2212%22%20height%3D%228%22%20rx%3D%222%22%20fill%3D%22%23f4ecd8%22%20fill-opacity%3D%22.85%22/%3E%3C/svg%3E") repeat-x; }
+  .marquee .strip.top { top: 0; }
+  .marquee .strip.bottom { bottom: 0; }
+  .marquee .beam { position: absolute; top: var(--s3); left: 0; width: 100%; height: calc(100% - 2 * var(--s3)); }
+  .marquee .projector { position: absolute; left: var(--s4); top: 20px; width: 132px; height: 96px; }
+  .marquee h1 { position: absolute; left: 180px; right: var(--s5); top: 50%; transform: translateY(-50%);
+                font: 34px/1.1 "Bungee", Impact, sans-serif; color: #fff4cc;
+                text-shadow: 0 0 14px rgb(255 214 120 / .55), 0 2px 0 #7a4b12; }
+  @media (max-width: 599.98px) {
+    .marquee { height: 112px; }
+    .marquee .projector { left: var(--s2); top: 22px; width: 92px; height: 68px; }
+    .marquee h1 { left: 112px; right: var(--s3); font-size: 21px; }
+  }
+
   /* Components */
   .button, .select { height: var(--control); border: 1px solid var(--line); border-radius: var(--r-sm);
                      background: var(--surface); color: var(--text); font-size: var(--t-sm);
@@ -80,10 +100,6 @@
   /* Filter rail: fixed column from 900px, an overlay below that. */
   .rail { background: var(--rail); border-right: 1px solid var(--line); overflow-y: auto;
           padding: var(--s3) var(--s5) var(--s5); font-size: var(--t-sm); }
-  .brand { height: var(--control); display: flex; align-items: center; gap: var(--s2);
-           font-size: var(--t-lg); font-weight: 700; margin-bottom: var(--s5); }
-  .brand::before { content: ""; width: var(--s3); height: var(--s3); border-radius: 3px;
-                   background: var(--accent); transform: rotate(45deg); }
   .rail-head { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s2); }
   .rail-head h2 { font-size: var(--t-md); font-weight: 700; margin-right: auto; }
   .rail fieldset { border: 0; padding: 0; margin: 0 0 var(--s5); min-width: 0; }
@@ -186,7 +202,6 @@
 </head>
 <body>
 <aside class="rail" id="filters" aria-label="Filters" tabindex="-1">
-  <div class="brand" aria-hidden="true">Showtimes</div>
   <div class="rail-head">
     <h2>Filters</h2>
     <button type="button" class="text-button" id="filters-clear" hidden>Clear all</button>
@@ -202,9 +217,33 @@
   </fieldset>
 </aside>
 <div class="page">
+<div class="marquee">
+  <div class="strip top"></div>
+  <svg class="beam" viewBox="0 0 1000 112" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="beam" x1="0" x2="1">
+      <stop offset="0" stop-color="#fff1c2" stop-opacity=".55"/>
+      <stop offset=".6" stop-color="#ffe29a" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#ffe29a" stop-opacity="0"/>
+    </linearGradient></defs>
+    <polygon points="150,62 1000,0 1000,112" fill="url(#beam)"/>
+  </svg>
+  <svg class="projector" viewBox="0 0 132 96" aria-hidden="true">
+    <g stroke="#cfc6b3" stroke-width="3" fill="#26231f"><circle cx="38" cy="26" r="22"/><circle cx="84" cy="30" r="18"/></g>
+    <g fill="#cfc6b3"><circle cx="38" cy="26" r="4"/><circle cx="84" cy="30" r="3.5"/></g>
+    <g fill="#0e0d0c"><circle cx="38" cy="14" r="4"/><circle cx="28" cy="32" r="4"/><circle cx="48" cy="32" r="4"/>
+      <circle cx="84" cy="20" r="3.4"/><circle cx="76" cy="35" r="3.4"/><circle cx="92" cy="35" r="3.4"/></g>
+    <path d="M38 48L30 58M84 48L96 58" stroke="#8a8170" stroke-width="2" fill="none"/>
+    <rect x="16" y="54" width="86" height="30" rx="6" fill="#3b3731" stroke="#cfc6b3" stroke-width="3"/>
+    <rect x="26" y="62" width="30" height="4" rx="2" fill="#8a8170"/><rect x="26" y="70" width="20" height="4" rx="2" fill="#8a8170"/>
+    <rect x="102" y="60" width="16" height="18" rx="3" fill="#57514a" stroke="#cfc6b3" stroke-width="3"/>
+    <circle cx="122" cy="69" r="6" fill="#fff4cc"/>
+    <path d="M30 84L24 94M88 84L94 94" stroke="#cfc6b3" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <h1>Andy's Awesome Movie Machine!</h1>
+  <div class="strip bottom"></div>
+</div>
 <header>
   <div class="wrap">
-    <h1 class="sr-only">Showtimes</h1>
     <div class="toolbar">
       <select class="select" id="day" aria-label="Date"></select>
       <span class="scope" id="window" hidden></span>
