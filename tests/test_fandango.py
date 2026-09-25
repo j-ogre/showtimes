@@ -59,7 +59,8 @@ class Showtimes(unittest.TestCase):
     def test_tags_come_from_formats_and_amenities(self):
         _, movies = parsed("aaqzz_2026-09-26")
         tags = {t for m in movies for s in m["showtimes"] for t in s["tags"]}
-        self.assertEqual(tags, {"IMAX", "Dolby", "ScreenX"})
+        self.assertEqual(tags, {"IMAX Laser", "Dolby", "PRIME", "XL", "ScreenX", "70MM",
+                                "No trailers", "Fathom", "Q&A"})
 
     def test_imax_70mm_replaces_imax(self):
         _, movies = parsed("aaawx_2026-09-26")

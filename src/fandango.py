@@ -10,7 +10,8 @@ from urllib.parse import urlparse
 from . import net
 
 API = "https://www.fandango.com/napi/theaterMovieShowtimes/{tid}?startDate={day}"
-TAG_ORDER = ("IMAX 70MM", "IMAX", "Dolby", "RPX", "ScreenX", "4DX", "3D")
+TAG_ORDER = ("IMAX 70MM", "IMAX Laser", "IMAX", "Dolby", "PRIME", "XL", "RPX", "ScreenX", "4DX", "70MM", "3D",
+             "No trailers", "Fathom", "Q&A", "Fan event")
 
 log = logging.getLogger(__name__)
 
@@ -75,8 +76,9 @@ def parse(vm: dict) -> tuple[str, list[dict]]:
 
     Each movie is {id, title, release_date, runtime, genres, poster, showtimes}.
     Each showtime is
-    {label, at, tags, status, ticket_url}, where `at` is the local start time
-    as "YYYY-MM-DDTHH:MM".
+    {label, at, tags, recliner, status, ticket_url}, where `at` is the local
+    start time as "YYYY-MM-DDTHH:MM" and `recliner` is whether its seats are
+    recliners.
     """
     name = ((vm.get("theater") or {}).get("details") or {}).get("name") or ""
     movies = []
@@ -85,9 +87,11 @@ def parse(vm: dict) -> tuple[str, list[dict]]:
         shows = []
         for variant in m.get("variants") or []:
             for group in variant.get("amenityGroups") or []:
-                group_tags = _tags(a.get("name") for a in group.get("amenities") or [])
+                names = [a.get("name") or "" for a in group.get("amenities") or []]
+                group_tags = _tags(names)
+                recliner = any("RECLINER" in n.upper() for n in names)
                 for s in group.get("showtimes") or []:
-                    show = _showtime(s, group_tags)
+                    show = _showtime(s, group_tags, recliner)
                     if show is None:
                         log.warning("%s: %s: skipped showtime without a time: %s",
                                     name, title, s.get("date"))
@@ -106,7 +110,7 @@ def parse(vm: dict) -> tuple[str, list[dict]]:
     return name, movies
 
 
-def _showtime(s: dict, group_tags: set[str]) -> dict | None:
+def _showtime(s: dict, group_tags: set[str], recliner: bool) -> dict | None:
     try:
         at = datetime.strptime(s.get("ticketingDate") or "", "%Y-%m-%d+%H:%M")
     except ValueError:
@@ -121,6 +125,7 @@ def _showtime(s: dict, group_tags: set[str]) -> dict | None:
         "label": s.get("date") or at.strftime("%H:%M"),
         "at": at.strftime("%Y-%m-%dT%H:%M"),
         "tags": _ordered(tags),
+        "recliner": recliner,
         "status": status,
         "ticket_url": s.get("ticketingJumpPageURL"),
     }
@@ -131,9 +136,15 @@ def _tags(names) -> set[str]:
     for name in names:
         n = (name or "").upper()
         if "IMAX" in n:
-            tags.add("IMAX 70MM" if "70MM" in n else "IMAX")
+            tags.add("IMAX 70MM" if "70MM" in n else "IMAX Laser" if "LASER" in n else "IMAX")
+        elif "70MM" in n:
+            tags.add("70MM")
         if "DOLBY CINEMA" in n:
             tags.add("Dolby")
+        if re.search(r"\bPRIME\b", n):
+            tags.add("PRIME")
+        if re.search(r"\bXL\b", n):
+            tags.add("XL")
         if "RPX" in n:
             tags.add("RPX")
         if "SCREENX" in n:
@@ -142,10 +153,21 @@ def _tags(names) -> set[str]:
             tags.add("4DX")
         if re.search(r"\b3D\b", n):
             tags.add("3D")
+        if "NO TRAILERS" in n:
+            tags.add("No trailers")
+        if "FATHOM" in n:
+            tags.add("Fathom")
+        if "Q&A" in n:
+            tags.add("Q&A")
+        if "FAN EVENT" in n:
+            tags.add("Fan event")
     return tags
 
 
 def _ordered(tags: set[str]) -> list[str]:
+    # Fandango also lists plain "IMAX" or "70MM" as the film format of these showings.
     if "IMAX 70MM" in tags:
+        tags = tags - {"IMAX", "70MM"}
+    if "IMAX Laser" in tags:
         tags = tags - {"IMAX"}
     return [t for t in TAG_ORDER if t in tags]
