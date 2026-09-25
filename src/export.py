@@ -3,6 +3,7 @@
 import argparse
 import json
 import logging
+import shutil
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -17,7 +18,7 @@ log = logging.getLogger(__name__)
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Write <out>/index.html and <out>/data/<date>.json. Returns the process exit code.
+    """Write <out>/index.html, <out>/static/ and <out>/data/<date>.json. Returns the process exit code.
 
     The exit code is 1 when no day has showtimes from at least one theater.
     """
@@ -37,6 +38,7 @@ def main(argv: list[str] | None = None) -> int:
         data_dir = args.out / "data"
         data_dir.mkdir(parents=True, exist_ok=True)
         (args.out / "index.html").write_text(page_html(config, True, args.days), encoding="utf-8")
+        shutil.copytree(ROOT / "static", args.out / "static", dirs_exist_ok=True)
     except (OSError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

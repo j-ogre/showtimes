@@ -1,4 +1,4 @@
-"""Local web server: the page at / and showtimes JSON at /api/showtimes."""
+"""Local web server: the page at /, files under /static/, and showtimes JSON at /api/showtimes."""
 
 import json
 import logging
@@ -13,6 +13,8 @@ from .cache import Cache
 from .resolve import Resolver
 
 PAGE = Path(__file__).resolve().parent.parent / "templates" / "page.html"
+STATIC = Path(__file__).resolve().parent.parent / "static"
+STATIC_TYPES = {".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8"}
 
 # Days the local page offers, starting today.
 DAYS = 3
@@ -43,6 +45,8 @@ def make_server(host: str, port: int, config: Config, resolver: Resolver,
             if url.path == "/":
                 # Read per request so template edits show up on reload.
                 self._send(200, "text/html; charset=utf-8", page_html(config, False, DAYS).encode())
+            elif url.path.startswith("/static/"):
+                self._static(url.path.removeprefix("/static/"))
             elif url.path == "/api/showtimes":
                 query = parse_qs(url.query)
                 self._showtimes(query.get("date", [""])[0],
@@ -65,6 +69,14 @@ def make_server(host: str, port: int, config: Config, resolver: Resolver,
                 self._json(500, {"error": "Fetch failed. See the terminal for details."})
                 return
             self._json(200, data)
+
+        def _static(self, name: str) -> None:
+            path = (STATIC / name).resolve()
+            kind = STATIC_TYPES.get(path.suffix)
+            if kind is None or not path.is_relative_to(STATIC) or not path.is_file():
+                self._json(404, {"error": "not found"})
+                return
+            self._send(200, kind, path.read_bytes())
 
         def _json(self, status: int, data: dict) -> None:
             self._send(status, "application/json",
