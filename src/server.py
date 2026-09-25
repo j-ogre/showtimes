@@ -14,18 +14,23 @@ from .resolve import Resolver
 
 PAGE = Path(__file__).resolve().parent.parent / "templates" / "page.html"
 
+# Days the local page offers, starting today.
+DAYS = 3
+
 log = logging.getLogger(__name__)
 
 
-def page_html(config: Config, static: bool) -> str:
+def page_html(config: Config, static: bool, days: int) -> str:
     """Return the page with its settings filled in.
 
     A `static` page reads data/<date>.json next to itself instead of the API.
+    The page offers `days` days, starting today.
     Raises OSError if the template cannot be read.
     """
     return (PAGE.read_text(encoding="utf-8")
             .replace("__TIMEZONE__", json.dumps(config.timezone.key))
-            .replace("__STATIC__", json.dumps(static)))
+            .replace("__STATIC__", json.dumps(static))
+            .replace("__DAYS__", json.dumps(days)))
 
 
 def make_server(host: str, port: int, config: Config, resolver: Resolver,
@@ -37,7 +42,7 @@ def make_server(host: str, port: int, config: Config, resolver: Resolver,
             url = urlparse(self.path)
             if url.path == "/":
                 # Read per request so template edits show up on reload.
-                self._send(200, "text/html; charset=utf-8", page_html(config, False).encode())
+                self._send(200, "text/html; charset=utf-8", page_html(config, False, DAYS).encode())
             elif url.path == "/api/showtimes":
                 query = parse_qs(url.query)
                 self._showtimes(query.get("date", [""])[0],

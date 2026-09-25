@@ -36,7 +36,7 @@ def main(argv: list[str] | None = None) -> int:
         resolver = Resolver(ROOT / "overrides.toml", ROOT / "cache" / "ids.json")
         data_dir = args.out / "data"
         data_dir.mkdir(parents=True, exist_ok=True)
-        (args.out / "index.html").write_text(page_html(config, True), encoding="utf-8")
+        (args.out / "index.html").write_text(page_html(config, True, args.days), encoding="utf-8")
     except (OSError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
